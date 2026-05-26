@@ -4,22 +4,25 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>GenEraser: Generalizable Video Object Removal</title>
-  <meta name="description" content="GenEraser project page with video object removal examples grouped by effect category.">
+  <meta name="description" content="GenEraser project page with video object removal examples grouped by removable effect category.">
   <style>
     :root {
       color-scheme: dark;
-      --bg: #070b12;
-      --panel: #111823;
-      --panel-2: #0d131d;
+      --bg: #0a0d0f;
+      --surface: #15191d;
+      --surface-2: #1d2328;
       --line: rgba(255,255,255,.14);
-      --text: #eef4ff;
-      --muted: #aab6c7;
-      --cyan: #44d7e8;
-      --green: #76e0a5;
-      --gold: #f4c95d;
+      --text: #f4f6f8;
+      --muted: #b8c0c7;
+      --teal: #4bd4c8;
+      --gold: #e9bf62;
+      --red: #e86d67;
     }
+
     * { box-sizing: border-box; }
+
     html { scroll-behavior: smooth; }
+
     body {
       margin: 0;
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -27,116 +30,237 @@
       color: var(--text);
       line-height: 1.5;
     }
+
+    button,
+    a { font: inherit; }
+
     .hero {
-      min-height: 68vh;
+      min-height: 64vh;
       display: grid;
       align-items: center;
-      padding: 92px 6vw 54px;
+      padding: 92px 6vw 56px;
       background:
-        linear-gradient(130deg, rgba(68,215,232,.20), transparent 34%),
-        linear-gradient(180deg, #172234 0%, #070b12 88%);
+        linear-gradient(135deg, rgba(75,212,200,.20), transparent 38%),
+        linear-gradient(180deg, #20262b 0%, var(--bg) 86%);
       border-bottom: 1px solid var(--line);
     }
-    .hero-inner { max-width: 1180px; }
+
+    .hero-inner {
+      width: min(1160px, 100%);
+    }
+
     .eyebrow {
       margin: 0 0 18px;
-      color: var(--cyan);
+      color: var(--teal);
       font-size: 14px;
       font-weight: 800;
       letter-spacing: .08em;
       text-transform: uppercase;
     }
+
     h1 {
       max-width: 1120px;
       margin: 0;
-      font-size: clamp(40px, 6vw, 78px);
-      line-height: 1.04;
+      font-size: clamp(38px, 5.5vw, 74px);
+      line-height: 1.05;
       letter-spacing: 0;
     }
+
     .subtitle {
-      max-width: 920px;
+      max-width: 900px;
       margin: 24px 0 0;
       color: var(--muted);
-      font-size: 21px;
+      font-size: 20px;
     }
-    .stats { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 32px; }
-    .stat { border: 1px solid var(--line); background: rgba(255,255,255,.045); padding: 13px 18px; min-width: 148px; }
-    .stat strong { display: block; font-size: 25px; }
-    .stat span { color: var(--muted); font-size: 13px; }
+
     .nav {
       position: sticky;
       top: 0;
-      z-index: 5;
+      z-index: 10;
       display: flex;
       gap: 10px;
       overflow-x: auto;
       padding: 14px 6vw;
-      background: rgba(7,11,18,.90);
+      background: rgba(10,13,15,.90);
       backdrop-filter: blur(14px);
       border-bottom: 1px solid var(--line);
     }
-    .nav-pill {
+
+    .nav a {
       white-space: nowrap;
       text-decoration: none;
       color: var(--text);
       border: 1px solid var(--line);
-      background: var(--panel);
+      background: var(--surface);
       padding: 9px 14px;
       font-weight: 800;
     }
-    .nav-pill span { color: var(--cyan); margin-left: 7px; }
-    main { padding: 48px 0 96px; }
-    .category-section { margin: 0 0 76px; }
-    .section-header {
-      width: min(1480px, 88vw);
-      margin: 0 auto 22px;
+
+    .nav a:hover,
+    .nav a:focus-visible {
+      border-color: var(--teal);
+      outline: none;
+    }
+
+    main { padding: 54px 0 92px; }
+
+    .category {
+      width: min(1240px, 88vw);
+      margin: 0 auto 74px;
+    }
+
+    .category-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 18px;
       border-bottom: 1px solid var(--line);
       padding-bottom: 16px;
     }
-    .section-header p {
+
+    .category-kicker {
       margin: 0 0 6px;
-      color: var(--cyan);
+      color: var(--teal);
       font-size: 13px;
       font-weight: 800;
       letter-spacing: .08em;
       text-transform: uppercase;
     }
-    .section-header h2 { margin: 0; font-size: clamp(30px, 4vw, 56px); line-height: 1; }
-    .scroll-wrap {
-      display: grid;
-      grid-auto-flow: column;
-      grid-auto-columns: minmax(420px, 48vw);
-      gap: 20px;
-      overflow-x: auto;
-      overscroll-behavior-inline: contain;
-      scroll-snap-type: inline mandatory;
-      padding: 0 6vw 18px;
-      scrollbar-color: var(--cyan) rgba(255,255,255,.10);
+
+    .category h2 {
+      margin: 0;
+      font-size: clamp(32px, 4vw, 56px);
+      line-height: 1;
+      letter-spacing: 0;
     }
-    .demo-card {
-      scroll-snap-align: start;
-      background: var(--panel);
-      border: 1px solid var(--line);
-      overflow: hidden;
-    }
-    video { display: block; width: 100%; aspect-ratio: 16 / 9; background: #000; }
-    .card-row { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 14px 16px 4px; }
-    .card-row h3 { margin: 0; font-size: 20px; }
-    .demo-card p { margin: 0; padding: 0 16px 16px; color: var(--muted); font-size: 14px; }
-    .badge {
-      color: #061116;
-      background: var(--green);
-      padding: 5px 8px;
-      font-size: 12px;
-      font-weight: 900;
+
+    .counter {
+      color: var(--muted);
+      font-weight: 800;
       white-space: nowrap;
     }
-    .badge.native { background: var(--gold); }
-    footer { width: min(1480px, 88vw); margin: 0 auto; color: var(--muted); border-top: 1px solid var(--line); padding-top: 22px; }
+
+    .carousel {
+      border: 1px solid var(--line);
+      background: var(--surface);
+      overflow: hidden;
+    }
+
+    .stage {
+      position: relative;
+      min-height: 280px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #000;
+    }
+
+    .stage video {
+      display: block;
+      width: auto;
+      height: auto;
+      max-width: 100%;
+      max-height: 72vh;
+      background: #000;
+    }
+
+    .carousel-tools {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 14px;
+      padding: 14px;
+      background: var(--surface-2);
+      border-top: 1px solid var(--line);
+    }
+
+    .carousel-button {
+      min-width: 88px;
+      border: 1px solid var(--line);
+      color: var(--text);
+      background: #0f1215;
+      padding: 10px 14px;
+      cursor: pointer;
+      font-weight: 800;
+    }
+
+    .carousel-button:hover,
+    .carousel-button:focus-visible {
+      border-color: var(--teal);
+      outline: none;
+    }
+
+    .dots {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      min-width: 0;
+      overflow-x: auto;
+      padding: 3px 0;
+      scrollbar-width: thin;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      flex: 0 0 10px;
+      border: 1px solid rgba(255,255,255,.55);
+      border-radius: 999px;
+      padding: 0;
+      background: transparent;
+      cursor: pointer;
+    }
+
+    .dot[aria-current="true"] {
+      background: var(--gold);
+      border-color: var(--gold);
+    }
+
+    footer {
+      width: min(1240px, 88vw);
+      margin: 0 auto;
+      color: var(--muted);
+      border-top: 1px solid var(--line);
+      padding-top: 22px;
+    }
+
     @media (max-width: 760px) {
-      .hero { min-height: 58vh; padding-top: 72px; }
+      .hero {
+        min-height: 56vh;
+        padding-top: 72px;
+      }
+
       .subtitle { font-size: 18px; }
-      .scroll-wrap { grid-auto-columns: minmax(300px, 86vw); }
+
+      .category {
+        width: min(100% - 28px, 1240px);
+        margin-bottom: 54px;
+      }
+
+      .category-head {
+        display: block;
+      }
+
+      .counter {
+        display: block;
+        margin-top: 10px;
+      }
+
+      .carousel-tools {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .dots {
+        grid-column: 1 / -1;
+        grid-row: 1;
+        justify-content: flex-start;
+      }
+
+      .carousel-button {
+        min-width: 0;
+      }
     }
   </style>
 </head>
@@ -145,600 +269,202 @@
     <div class="hero-inner">
       <p class="eyebrow">Generalizable Video Object Removal</p>
       <h1>GenEraser: Generalizable Video Object Removal via Balanced Text-Mask Guidance and Decoupled Locator-Preserver</h1>
-      <p class="subtitle">Examples are grouped by removable effect category. Clips shorter than three seconds are slowed down by reducing playback fps while preserving every retained frame and original resolution.</p>
-      <div class="stats">
-        <div class="stat"><strong>57</strong><span>video examples</span></div>
-        <div class="stat"><strong>10</strong><span>fps-adjusted clips</span></div>
-        <div class="stat"><strong>6</strong><span>effect categories</span></div>
-      </div>
+      <p class="subtitle">GenEraser removes visual effects including deformation, reflection, lighting, smoke, mirror artifacts, and shadow.</p>
     </div>
   </header>
-  <nav class="nav" aria-label="Effect categories">
-    <a class="nav-pill" href="#deformation">Deformation<span>14</span></a>
-<a class="nav-pill" href="#reflection">Reflection<span>7</span></a>
-<a class="nav-pill" href="#light">Light<span>13</span></a>
-<a class="nav-pill" href="#smoke">Smoke<span>10</span></a>
-<a class="nav-pill" href="#mirror">Mirror<span>6</span></a>
-<a class="nav-pill" href="#shadow">Shadow<span>7</span></a>
-  </nav>
-  <main>
-    
-    <section id="deformation" class="category-section">
-      <div class="section-header">
-        <p>Effect Category</p>
-        <h2>Deformation</h2>
-      </div>
-      <div class="scroll-wrap" aria-label="Deformation examples">
-        
-          <article class="demo-card">
-            <video src="static/videos/GenEraser/Deformation/01.mp4" controls muted loop playsinline preload="metadata"></video>
-            <div class="card-row">
-              <h3>Example 01</h3>
-              <span class="badge native">Native</span>
-            </div>
-            <p>81 frames | 27.00 fps | 3.00s</p>
-          </article>
-        
-          <article class="demo-card">
-            <video src="static/videos/GenEraser/Deformation/02.mp4" controls muted loop playsinline preload="metadata"></video>
-            <div class="card-row">
-              <h3>Example 02</h3>
-              <span class="badge native">Native</span>
-            </div>
-            <p>81 frames | 27.00 fps | 3.00s</p>
-          </article>
-        
-          <article class="demo-card">
-            <video src="static/videos/GenEraser/Deformation/03.mp4" controls muted loop playsinline preload="metadata"></video>
-            <div class="card-row">
-              <h3>Example 03</h3>
-              <span class="badge">FPS adjusted</span>
-            </div>
-            <p>61 frames | 20.33 fps | 3.00s</p>
-          </article>
-        
-          <article class="demo-card">
-            <video src="static/videos/GenEraser/Deformation/04.mp4" controls muted loop playsinline preload="metadata"></video>
-            <div class="card-row">
-              <h3>Example 04</h3>
-              <span class="badge native">Native</span>
-            </div>
-            <p>81 frames | 27.00 fps | 3.00s</p>
-          </article>
-        
-          <article class="demo-card">
-            <video src="static/videos/GenEraser/Deformation/05.mp4" controls muted loop playsinline preload="metadata"></video>
-            <div class="card-row">
-              <h3>Example 05</h3>
-              <span class="badge native">Native</span>
-            </div>
-            <p>81 frames | 27.00 fps | 3.00s</p>
-          </article>
-        
-          <article class="demo-card">
-            <video src="static/videos/GenEraser/Deformation/06.mp4" controls muted loop playsinline preload="metadata"></video>
-            <div class="card-row">
-              <h3>Example 06</h3>
-              <span class="badge native">Native</span>
-            </div>
-            <p>81 frames | 27.00 fps | 3.00s</p>
-          </article>
-        
-          <article class="demo-card">
-            <video src="static/videos/GenEraser/Deformation/07.mp4" controls muted loop playsinline preload="metadata"></video>
-            <div class="card-row">
-              <h3>Example 07</h3>
-              <span class="badge native">Native</span>
-            </div>
-            <p>81 frames | 27.00 fps | 3.00s</p>
-          </article>
-        
-          <article class="demo-card">
-            <video src="static/videos/GenEraser/Deformation/08.mp4" controls muted loop playsinline preload="metadata"></video>
-            <div class="card-row">
-              <h3>Example 08</h3>
-              <span class="badge native">Native</span>
-            </div>
-            <p>81 frames | 27.00 fps | 3.00s</p>
-          </article>
-        
-          <article class="demo-card">
-            <video src="static/videos/GenEraser/Deformation/09.mp4" controls muted loop playsinline preload="metadata"></video>
-            <div class="card-row">
-              <h3>Example 09</h3>
-              <span class="badge">FPS adjusted</span>
-            </div>
-            <p>49 frames | 16.33 fps | 3.00s</p>
-          </article>
-        
-          <article class="demo-card">
-            <video src="static/videos/GenEraser/Deformation/10.mp4" controls muted loop playsinline preload="metadata"></video>
-            <div class="card-row">
-              <h3>Example 10</h3>
-              <span class="badge">FPS adjusted</span>
-            </div>
-            <p>41 frames | 13.67 fps | 3.00s</p>
-          </article>
-        
-          <article class="demo-card">
-            <video src="static/videos/GenEraser/Deformation/11.mp4" controls muted loop playsinline preload="metadata"></video>
-            <div class="card-row">
-              <h3>Example 11</h3>
-              <span class="badge native">Native</span>
-            </div>
-            <p>81 frames | 27.00 fps | 3.00s</p>
-          </article>
-        
-          <article class="demo-card">
-            <video src="static/videos/GenEraser/Deformation/12.mp4" controls muted loop playsinline preload="metadata"></video>
-            <div class="card-row">
-              <h3>Example 12</h3>
-              <span class="badge native">Native</span>
-            </div>
-            <p>81 frames | 27.00 fps | 3.00s</p>
-          </article>
-        
-          <article class="demo-card">
-            <video src="static/videos/GenEraser/Deformation/13.mp4" controls muted loop playsinline preload="metadata"></video>
-            <div class="card-row">
-              <h3>Example 13</h3>
-              <span class="badge">FPS adjusted</span>
-            </div>
-            <p>65 frames | 21.67 fps | 3.00s</p>
-          </article>
-        
-          <article class="demo-card">
-            <video src="static/videos/GenEraser/Deformation/14.mp4" controls muted loop playsinline preload="metadata"></video>
-            <div class="card-row">
-              <h3>Example 14</h3>
-              <span class="badge native">Native</span>
-            </div>
-            <p>81 frames | 27.00 fps | 3.00s</p>
-          </article>
-        
-      </div>
-    </section>
-    
-    <section id="reflection" class="category-section">
-      <div class="section-header">
-        <p>Effect Category</p>
-        <h2>Reflection</h2>
-      </div>
-      <div class="scroll-wrap" aria-label="Reflection examples">
-        
-          <article class="demo-card">
-            <video src="static/videos/GenEraser/Reflection/01.mp4" controls muted loop playsinline preload="metadata"></video>
-            <div class="card-row">
-              <h3>Example 01</h3>
-              <span class="badge">FPS adjusted</span>
-            </div>
-            <p>33 frames | 11.00 fps | 3.00s</p>
-          </article>
-        
-          <article class="demo-card">
-            <video src="static/videos/GenEraser/Reflection/02.mp4" controls muted loop playsinline preload="metadata"></video>
-            <div class="card-row">
-              <h3>Example 02</h3>
-              <span class="badge native">Native</span>
-            </div>
-            <p>81 frames | 27.00 fps | 3.00s</p>
-          </article>
-        
-          <article class="demo-card">
-            <video src="static/videos/GenEraser/Reflection/03.mp4" controls muted loop playsinline preload="metadata"></video>
-            <div class="card-row">
-              <h3>Example 03</h3>
-              <span class="badge native">Native</span>
-            </div>
-            <p>81 frames | 27.00 fps | 3.00s</p>
-          </article>
-        
-          <article class="demo-card">
-            <video src="static/videos/GenEraser/Reflection/04.mp4" controls muted loop playsinline preload="metadata"></video>
-            <div class="card-row">
-              <h3>Example 04</h3>
-              <span class="badge native">Native</span>
-            </div>
-            <p>81 frames | 27.00 fps | 3.00s</p>
-          </article>
-        
-          <article class="demo-card">
-            <video src="static/videos/GenEraser/Reflection/05.mp4" controls muted loop playsinline preload="metadata"></video>
-            <div class="card-row">
-              <h3>Example 05</h3>
-              <span class="badge native">Native</span>
-            </div>
-            <p>81 frames | 27.00 fps | 3.00s</p>
-          </article>
-        
-          <article class="demo-card">
-            <video src="static/videos/GenEraser/Reflection/06.mp4" controls muted loop playsinline preload="metadata"></video>
-            <div class="card-row">
-              <h3>Example 06</h3>
-              <span class="badge native">Native</span>
-            </div>
-            <p>81 frames | 27.00 fps | 3.00s</p>
-          </article>
-        
-          <article class="demo-card">
-            <video src="static/videos/GenEraser/Reflection/07.mp4" controls muted loop playsinline preload="metadata"></video>
-            <div class="card-row">
-              <h3>Example 07</h3>
-              <span class="badge native">Native</span>
-            </div>
-            <p>81 frames | 27.00 fps | 3.00s</p>
-          </article>
-        
-      </div>
-    </section>
-    
-    <section id="light" class="category-section">
-      <div class="section-header">
-        <p>Effect Category</p>
-        <h2>Light</h2>
-      </div>
-      <div class="scroll-wrap" aria-label="Light examples">
-        
-          <article class="demo-card">
-            <video src="static/videos/GenEraser/Light/01.mp4" controls muted loop playsinline preload="metadata"></video>
-            <div class="card-row">
-              <h3>Example 01</h3>
-              <span class="badge native">Native</span>
-            </div>
-            <p>81 frames | 27.00 fps | 3.00s</p>
-          </article>
-        
-          <article class="demo-card">
-            <video src="static/videos/GenEraser/Light/02.mp4" controls muted loop playsinline preload="metadata"></video>
-            <div class="card-row">
-              <h3>Example 02</h3>
-              <span class="badge native">Native</span>
-            </div>
-            <p>81 frames | 27.00 fps | 3.00s</p>
-          </article>
-        
-          <article class="demo-card">
-            <video src="static/videos/GenEraser/Light/03.mp4" controls muted loop playsinline preload="metadata"></video>
-            <div class="card-row">
-              <h3>Example 03</h3>
-              <span class="badge native">Native</span>
-            </div>
-            <p>81 frames | 27.00 fps | 3.00s</p>
-          </article>
-        
-          <article class="demo-card">
-            <video src="static/videos/GenEraser/Light/04.mp4" controls muted loop playsinline preload="metadata"></video>
-            <div class="card-row">
-              <h3>Example 04</h3>
-              <span class="badge native">Native</span>
-            </div>
-            <p>81 frames | 27.00 fps | 3.00s</p>
-          </article>
-        
-          <article class="demo-card">
-            <video src="static/videos/GenEraser/Light/05.mp4" controls muted loop playsinline preload="metadata"></video>
-            <div class="card-row">
-              <h3>Example 05</h3>
-              <span class="badge native">Native</span>
-            </div>
-            <p>81 frames | 27.00 fps | 3.00s</p>
-          </article>
-        
-          <article class="demo-card">
-            <video src="static/videos/GenEraser/Light/06.mp4" controls muted loop playsinline preload="metadata"></video>
-            <div class="card-row">
-              <h3>Example 06</h3>
-              <span class="badge native">Native</span>
-            </div>
-            <p>81 frames | 27.00 fps | 3.00s</p>
-          </article>
-        
-          <article class="demo-card">
-            <video src="static/videos/GenEraser/Light/07.mp4" controls muted loop playsinline preload="metadata"></video>
-            <div class="card-row">
-              <h3>Example 07</h3>
-              <span class="badge">FPS adjusted</span>
-            </div>
-            <p>33 frames | 11.00 fps | 3.00s</p>
-          </article>
-        
-          <article class="demo-card">
-            <video src="static/videos/GenEraser/Light/08.mp4" controls muted loop playsinline preload="metadata"></video>
-            <div class="card-row">
-              <h3>Example 08</h3>
-              <span class="badge native">Native</span>
-            </div>
-            <p>81 frames | 27.00 fps | 3.00s</p>
-          </article>
-        
-          <article class="demo-card">
-            <video src="static/videos/GenEraser/Light/09.mp4" controls muted loop playsinline preload="metadata"></video>
-            <div class="card-row">
-              <h3>Example 09</h3>
-              <span class="badge native">Native</span>
-            </div>
-            <p>81 frames | 27.00 fps | 3.00s</p>
-          </article>
-        
-          <article class="demo-card">
-            <video src="static/videos/GenEraser/Light/10.mp4" controls muted loop playsinline preload="metadata"></video>
-            <div class="card-row">
-              <h3>Example 10</h3>
-              <span class="badge native">Native</span>
-            </div>
-            <p>81 frames | 27.00 fps | 3.00s</p>
-          </article>
-        
-          <article class="demo-card">
-            <video src="static/videos/GenEraser/Light/11.mp4" controls muted loop playsinline preload="metadata"></video>
-            <div class="card-row">
-              <h3>Example 11</h3>
-              <span class="badge native">Native</span>
-            </div>
-            <p>81 frames | 27.00 fps | 3.00s</p>
-          </article>
-        
-          <article class="demo-card">
-            <video src="static/videos/GenEraser/Light/12.mp4" controls muted loop playsinline preload="metadata"></video>
-            <div class="card-row">
-              <h3>Example 12</h3>
-              <span class="badge native">Native</span>
-            </div>
-            <p>81 frames | 27.00 fps | 3.00s</p>
-          </article>
-        
-          <article class="demo-card">
-            <video src="static/videos/GenEraser/Light/13.mp4" controls muted loop playsinline preload="metadata"></video>
-            <div class="card-row">
-              <h3>Example 13</h3>
-              <span class="badge native">Native</span>
-            </div>
-            <p>81 frames | 27.00 fps | 3.00s</p>
-          </article>
-        
-      </div>
-    </section>
-    
-    <section id="smoke" class="category-section">
-      <div class="section-header">
-        <p>Effect Category</p>
-        <h2>Smoke</h2>
-      </div>
-      <div class="scroll-wrap" aria-label="Smoke examples">
-        
-          <article class="demo-card">
-            <video src="static/videos/GenEraser/Smoke/01.mp4" controls muted loop playsinline preload="metadata"></video>
-            <div class="card-row">
-              <h3>Example 01</h3>
-              <span class="badge native">Native</span>
-            </div>
-            <p>81 frames | 27.00 fps | 3.00s</p>
-          </article>
-        
-          <article class="demo-card">
-            <video src="static/videos/GenEraser/Smoke/02.mp4" controls muted loop playsinline preload="metadata"></video>
-            <div class="card-row">
-              <h3>Example 02</h3>
-              <span class="badge">FPS adjusted</span>
-            </div>
-            <p>65 frames | 21.67 fps | 3.00s</p>
-          </article>
-        
-          <article class="demo-card">
-            <video src="static/videos/GenEraser/Smoke/03.mp4" controls muted loop playsinline preload="metadata"></video>
-            <div class="card-row">
-              <h3>Example 03</h3>
-              <span class="badge native">Native</span>
-            </div>
-            <p>81 frames | 27.00 fps | 3.00s</p>
-          </article>
-        
-          <article class="demo-card">
-            <video src="static/videos/GenEraser/Smoke/04.mp4" controls muted loop playsinline preload="metadata"></video>
-            <div class="card-row">
-              <h3>Example 04</h3>
-              <span class="badge native">Native</span>
-            </div>
-            <p>81 frames | 27.00 fps | 3.00s</p>
-          </article>
-        
-          <article class="demo-card">
-            <video src="static/videos/GenEraser/Smoke/05.mp4" controls muted loop playsinline preload="metadata"></video>
-            <div class="card-row">
-              <h3>Example 05</h3>
-              <span class="badge native">Native</span>
-            </div>
-            <p>81 frames | 27.00 fps | 3.00s</p>
-          </article>
-        
-          <article class="demo-card">
-            <video src="static/videos/GenEraser/Smoke/06.mp4" controls muted loop playsinline preload="metadata"></video>
-            <div class="card-row">
-              <h3>Example 06</h3>
-              <span class="badge native">Native</span>
-            </div>
-            <p>81 frames | 27.00 fps | 3.00s</p>
-          </article>
-        
-          <article class="demo-card">
-            <video src="static/videos/GenEraser/Smoke/07.mp4" controls muted loop playsinline preload="metadata"></video>
-            <div class="card-row">
-              <h3>Example 07</h3>
-              <span class="badge">FPS adjusted</span>
-            </div>
-            <p>11 frames | 3.67 fps | 3.00s</p>
-          </article>
-        
-          <article class="demo-card">
-            <video src="static/videos/GenEraser/Smoke/08.mp4" controls muted loop playsinline preload="metadata"></video>
-            <div class="card-row">
-              <h3>Example 08</h3>
-              <span class="badge native">Native</span>
-            </div>
-            <p>81 frames | 27.00 fps | 3.00s</p>
-          </article>
-        
-          <article class="demo-card">
-            <video src="static/videos/GenEraser/Smoke/09.mp4" controls muted loop playsinline preload="metadata"></video>
-            <div class="card-row">
-              <h3>Example 09</h3>
-              <span class="badge">FPS adjusted</span>
-            </div>
-            <p>41 frames | 13.67 fps | 3.00s</p>
-          </article>
-        
-          <article class="demo-card">
-            <video src="static/videos/GenEraser/Smoke/10.mp4" controls muted loop playsinline preload="metadata"></video>
-            <div class="card-row">
-              <h3>Example 10</h3>
-              <span class="badge native">Native</span>
-            </div>
-            <p>81 frames | 27.00 fps | 3.00s</p>
-          </article>
-        
-      </div>
-    </section>
-    
-    <section id="mirror" class="category-section">
-      <div class="section-header">
-        <p>Effect Category</p>
-        <h2>Mirror</h2>
-      </div>
-      <div class="scroll-wrap" aria-label="Mirror examples">
-        
-          <article class="demo-card">
-            <video src="static/videos/GenEraser/Mirror/01.mp4" controls muted loop playsinline preload="metadata"></video>
-            <div class="card-row">
-              <h3>Example 01</h3>
-              <span class="badge native">Native</span>
-            </div>
-            <p>81 frames | 27.00 fps | 3.00s</p>
-          </article>
-        
-          <article class="demo-card">
-            <video src="static/videos/GenEraser/Mirror/02.mp4" controls muted loop playsinline preload="metadata"></video>
-            <div class="card-row">
-              <h3>Example 02</h3>
-              <span class="badge native">Native</span>
-            </div>
-            <p>81 frames | 27.00 fps | 3.00s</p>
-          </article>
-        
-          <article class="demo-card">
-            <video src="static/videos/GenEraser/Mirror/03.mp4" controls muted loop playsinline preload="metadata"></video>
-            <div class="card-row">
-              <h3>Example 03</h3>
-              <span class="badge native">Native</span>
-            </div>
-            <p>81 frames | 27.00 fps | 3.00s</p>
-          </article>
-        
-          <article class="demo-card">
-            <video src="static/videos/GenEraser/Mirror/04.mp4" controls muted loop playsinline preload="metadata"></video>
-            <div class="card-row">
-              <h3>Example 04</h3>
-              <span class="badge">FPS adjusted</span>
-            </div>
-            <p>49 frames | 16.33 fps | 3.00s</p>
-          </article>
-        
-          <article class="demo-card">
-            <video src="static/videos/GenEraser/Mirror/05.mp4" controls muted loop playsinline preload="metadata"></video>
-            <div class="card-row">
-              <h3>Example 05</h3>
-              <span class="badge native">Native</span>
-            </div>
-            <p>81 frames | 27.00 fps | 3.00s</p>
-          </article>
-        
-          <article class="demo-card">
-            <video src="static/videos/GenEraser/Mirror/06.mp4" controls muted loop playsinline preload="metadata"></video>
-            <div class="card-row">
-              <h3>Example 06</h3>
-              <span class="badge native">Native</span>
-            </div>
-            <p>81 frames | 27.00 fps | 3.00s</p>
-          </article>
-        
-      </div>
-    </section>
-    
-    <section id="shadow" class="category-section">
-      <div class="section-header">
-        <p>Effect Category</p>
-        <h2>Shadow</h2>
-      </div>
-      <div class="scroll-wrap" aria-label="Shadow examples">
-        
-          <article class="demo-card">
-            <video src="static/videos/GenEraser/Shadow/01.mp4" controls muted loop playsinline preload="metadata"></video>
-            <div class="card-row">
-              <h3>Example 01</h3>
-              <span class="badge native">Native</span>
-            </div>
-            <p>81 frames | 27.00 fps | 3.00s</p>
-          </article>
-        
-          <article class="demo-card">
-            <video src="static/videos/GenEraser/Shadow/02.mp4" controls muted loop playsinline preload="metadata"></video>
-            <div class="card-row">
-              <h3>Example 02</h3>
-              <span class="badge native">Native</span>
-            </div>
-            <p>81 frames | 27.00 fps | 3.00s</p>
-          </article>
-        
-          <article class="demo-card">
-            <video src="static/videos/GenEraser/Shadow/03.mp4" controls muted loop playsinline preload="metadata"></video>
-            <div class="card-row">
-              <h3>Example 03</h3>
-              <span class="badge native">Native</span>
-            </div>
-            <p>81 frames | 27.00 fps | 3.00s</p>
-          </article>
-        
-          <article class="demo-card">
-            <video src="static/videos/GenEraser/Shadow/04.mp4" controls muted loop playsinline preload="metadata"></video>
-            <div class="card-row">
-              <h3>Example 04</h3>
-              <span class="badge native">Native</span>
-            </div>
-            <p>81 frames | 27.00 fps | 3.00s</p>
-          </article>
-        
-          <article class="demo-card">
-            <video src="static/videos/GenEraser/Shadow/05.mp4" controls muted loop playsinline preload="metadata"></video>
-            <div class="card-row">
-              <h3>Example 05</h3>
-              <span class="badge native">Native</span>
-            </div>
-            <p>81 frames | 27.00 fps | 3.00s</p>
-          </article>
-        
-          <article class="demo-card">
-            <video src="static/videos/GenEraser/Shadow/06.mp4" controls muted loop playsinline preload="metadata"></video>
-            <div class="card-row">
-              <h3>Example 06</h3>
-              <span class="badge native">Native</span>
-            </div>
-            <p>81 frames | 27.00 fps | 3.00s</p>
-          </article>
-        
-          <article class="demo-card">
-            <video src="static/videos/GenEraser/Shadow/07.mp4" controls muted loop playsinline preload="metadata"></video>
-            <div class="card-row">
-              <h3>Example 07</h3>
-              <span class="badge native">Native</span>
-            </div>
-            <p>81 frames | 27.00 fps | 3.00s</p>
-          </article>
-        
-      </div>
-    </section>
-    
-    <footer>
-      <p>All examples keep the source width and height. Videos are named numerically within each effect category directory for compact page references.</p>
-    </footer>
-  </main>
+
+  <nav class="nav" aria-label="Effect categories" id="category-nav"></nav>
+
+  <main id="gallery"></main>
+
+  <footer>
+    <p>GenEraser project page examples are grouped by removable effect category.</p>
+  </footer>
+
+  <script>
+    const galleryData = [
+      {
+        name: "Deformation",
+        id: "deformation",
+        videos: [
+          "./static/videos/GenEraser/Deformation/01.mp4",
+          "./static/videos/GenEraser/Deformation/02.mp4",
+          "./static/videos/GenEraser/Deformation/03.mp4",
+          "./static/videos/GenEraser/Deformation/04.mp4",
+          "./static/videos/GenEraser/Deformation/05.mp4",
+          "./static/videos/GenEraser/Deformation/06.mp4",
+          "./static/videos/GenEraser/Deformation/07.mp4",
+          "./static/videos/GenEraser/Deformation/08.mp4",
+          "./static/videos/GenEraser/Deformation/09.mp4",
+          "./static/videos/GenEraser/Deformation/10.mp4",
+          "./static/videos/GenEraser/Deformation/11.mp4",
+          "./static/videos/GenEraser/Deformation/12.mp4",
+          "./static/videos/GenEraser/Deformation/13.mp4",
+          "./static/videos/GenEraser/Deformation/14.mp4"
+        ]
+      },
+      {
+        name: "Reflection",
+        id: "reflection",
+        videos: [
+          "./static/videos/GenEraser/Reflection/01.mp4",
+          "./static/videos/GenEraser/Reflection/02.mp4",
+          "./static/videos/GenEraser/Reflection/03.mp4",
+          "./static/videos/GenEraser/Reflection/04.mp4",
+          "./static/videos/GenEraser/Reflection/05.mp4",
+          "./static/videos/GenEraser/Reflection/06.mp4",
+          "./static/videos/GenEraser/Reflection/07.mp4"
+        ]
+      },
+      {
+        name: "Light",
+        id: "light",
+        videos: [
+          "./static/videos/GenEraser/Light/01.mp4",
+          "./static/videos/GenEraser/Light/02.mp4",
+          "./static/videos/GenEraser/Light/03.mp4",
+          "./static/videos/GenEraser/Light/04.mp4",
+          "./static/videos/GenEraser/Light/05.mp4",
+          "./static/videos/GenEraser/Light/06.mp4",
+          "./static/videos/GenEraser/Light/07.mp4",
+          "./static/videos/GenEraser/Light/08.mp4",
+          "./static/videos/GenEraser/Light/09.mp4",
+          "./static/videos/GenEraser/Light/10.mp4",
+          "./static/videos/GenEraser/Light/11.mp4",
+          "./static/videos/GenEraser/Light/12.mp4",
+          "./static/videos/GenEraser/Light/13.mp4"
+        ]
+      },
+      {
+        name: "Smoke",
+        id: "smoke",
+        videos: [
+          "./static/videos/GenEraser/Smoke/01.mp4",
+          "./static/videos/GenEraser/Smoke/02.mp4",
+          "./static/videos/GenEraser/Smoke/03.mp4",
+          "./static/videos/GenEraser/Smoke/04.mp4",
+          "./static/videos/GenEraser/Smoke/05.mp4",
+          "./static/videos/GenEraser/Smoke/06.mp4",
+          "./static/videos/GenEraser/Smoke/07.mp4",
+          "./static/videos/GenEraser/Smoke/08.mp4",
+          "./static/videos/GenEraser/Smoke/09.mp4",
+          "./static/videos/GenEraser/Smoke/10.mp4"
+        ]
+      },
+      {
+        name: "Mirror",
+        id: "mirror",
+        videos: [
+          "./static/videos/GenEraser/Mirror/01.mp4",
+          "./static/videos/GenEraser/Mirror/02.mp4",
+          "./static/videos/GenEraser/Mirror/03.mp4",
+          "./static/videos/GenEraser/Mirror/04.mp4",
+          "./static/videos/GenEraser/Mirror/05.mp4",
+          "./static/videos/GenEraser/Mirror/06.mp4"
+        ]
+      },
+      {
+        name: "Shadow",
+        id: "shadow",
+        videos: [
+          "./static/videos/GenEraser/Shadow/01.mp4",
+          "./static/videos/GenEraser/Shadow/02.mp4",
+          "./static/videos/GenEraser/Shadow/03.mp4",
+          "./static/videos/GenEraser/Shadow/04.mp4",
+          "./static/videos/GenEraser/Shadow/05.mp4",
+          "./static/videos/GenEraser/Shadow/06.mp4",
+          "./static/videos/GenEraser/Shadow/07.mp4"
+        ]
+      }
+    ];
+
+    const nav = document.querySelector("#category-nav");
+    const gallery = document.querySelector("#gallery");
+
+    galleryData.forEach((category) => {
+      const link = document.createElement("a");
+      link.href = `#${category.id}`;
+      link.textContent = category.name;
+      nav.appendChild(link);
+
+      const section = document.createElement("section");
+      section.className = "category";
+      section.id = category.id;
+      section.innerHTML = `
+        <div class="category-head">
+          <div>
+            <p class="category-kicker">Effect Category</p>
+            <h2>${category.name}</h2>
+          </div>
+          <span class="counter" aria-live="polite"></span>
+        </div>
+        <div class="carousel" data-index="0">
+          <div class="stage">
+            <video controls muted loop playsinline preload="metadata">
+              <source src="${category.videos[0]}" type="video/mp4">
+            </video>
+          </div>
+          <div class="carousel-tools">
+            <button class="carousel-button prev" type="button">Prev</button>
+            <div class="dots" role="tablist" aria-label="${category.name} examples"></div>
+            <button class="carousel-button next" type="button">Next</button>
+          </div>
+        </div>
+      `;
+      gallery.appendChild(section);
+
+      setupCarousel(section, category);
+    });
+
+    function setupCarousel(section, category) {
+      const carousel = section.querySelector(".carousel");
+      const video = section.querySelector("video");
+      const source = section.querySelector("source");
+      const counter = section.querySelector(".counter");
+      const dots = section.querySelector(".dots");
+      const prev = section.querySelector(".prev");
+      const next = section.querySelector(".next");
+      let index = 0;
+      let wheelReady = true;
+
+      category.videos.forEach((_, dotIndex) => {
+        const dot = document.createElement("button");
+        dot.className = "dot";
+        dot.type = "button";
+        dot.setAttribute("role", "tab");
+        dot.setAttribute("aria-label", `${category.name} example ${dotIndex + 1}`);
+        dot.addEventListener("click", () => setSlide(dotIndex));
+        dots.appendChild(dot);
+      });
+
+      function setSlide(nextIndex) {
+        index = (nextIndex + category.videos.length) % category.videos.length;
+        carousel.dataset.index = String(index);
+        source.src = category.videos[index];
+        video.load();
+        video.play().catch(() => {});
+        counter.textContent = `${index + 1} / ${category.videos.length}`;
+        dots.querySelectorAll(".dot").forEach((dot, dotIndex) => {
+          dot.setAttribute("aria-current", dotIndex === index ? "true" : "false");
+        });
+      }
+
+      prev.addEventListener("click", () => setSlide(index - 1));
+      next.addEventListener("click", () => setSlide(index + 1));
+
+      carousel.addEventListener("wheel", (event) => {
+        const delta = Math.abs(event.deltaX) > Math.abs(event.deltaY) ? event.deltaX : event.deltaY;
+        if (Math.abs(delta) < 8 || !wheelReady) return;
+        event.preventDefault();
+        wheelReady = false;
+        setSlide(index + (delta > 0 ? 1 : -1));
+        window.setTimeout(() => {
+          wheelReady = true;
+        }, 420);
+      }, { passive: false });
+
+      setSlide(0);
+    }
+  </script>
 </body>
 </html>
