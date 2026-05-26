@@ -1,0 +1,1939 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GenEraser Project Page</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #070b12;
+      --panel: #111823;
+      --line: rgba(255,255,255,.14);
+      --text: #eef4ff;
+      --muted: #aab6c7;
+      --cyan: #44d7e8;
+      --gold: #f4c95d;
+      --green: #6fe0a5;
+      --red: #ff817d;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+    }
+    a { color: inherit; }
+    .hero {
+      min-height: 72vh;
+      display: grid;
+      align-items: center;
+      padding: 96px 6vw 56px;
+      background:
+        linear-gradient(120deg, rgba(68,215,232,.20), transparent 34%),
+        linear-gradient(180deg, #172234 0%, #070b12 86%);
+      border-bottom: 1px solid var(--line);
+    }
+    .hero-inner { max-width: 1160px; }
+    .eyebrow {
+      color: var(--cyan);
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      margin: 0 0 18px;
+    }
+    h1 {
+      max-width: 1120px;
+      font-size: clamp(42px, 6vw, 80px);
+      line-height: 1.02;
+      margin: 0;
+      letter-spacing: 0;
+    }
+    .subtitle {
+      max-width: 920px;
+      margin: 26px 0 0;
+      color: var(--muted);
+      font-size: 22px;
+    }
+    .stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 34px;
+    }
+    .stat {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.045);
+      padding: 13px 18px;
+      min-width: 146px;
+    }
+    .stat strong { display:block; font-size: 24px; }
+    .stat span { color: var(--muted); font-size: 13px; }
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding: 14px 6vw;
+      background: rgba(7,11,18,.88);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--line);
+    }
+    .pill {
+      white-space: nowrap;
+      text-decoration: none;
+      border: 1px solid var(--line);
+      padding: 9px 14px;
+      background: #111823;
+      font-weight: 700;
+    }
+    .pill span { color: var(--cyan); margin-left: 6px; }
+    main { padding: 48px 6vw 96px; }
+    .category-section {
+      max-width: 1480px;
+      margin: 0 auto 76px;
+    }
+    .section-heading {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 22px;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 16px;
+    }
+    .section-heading p {
+      margin: 0 0 6px;
+      color: var(--cyan);
+      text-transform: uppercase;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: .08em;
+    }
+    .section-heading h2 {
+      margin: 0;
+      font-size: clamp(30px, 4vw, 56px);
+      line-height: 1;
+    }
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+      gap: 20px;
+    }
+    .video-card {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      overflow: hidden;
+    }
+    video {
+      display: block;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #000;
+    }
+    .video-meta {
+      padding: 14px 16px 16px;
+    }
+    .video-meta h3 {
+      margin: 0;
+      font-size: 19px;
+    }
+    .video-meta p {
+      margin: 6px 0 14px;
+      color: var(--muted);
+      font-size: 13px;
+      overflow-wrap: anywhere;
+    }
+    dl {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin: 0;
+    }
+    dt {
+      color: var(--muted);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+    }
+    dd {
+      margin: 2px 0 0;
+      font-weight: 800;
+      font-size: 14px;
+    }
+    .badge {
+      display: inline-block;
+      margin-top: 14px;
+      color: #071016;
+      background: var(--green);
+      padding: 5px 8px;
+      font-size: 12px;
+      font-weight: 800;
+    }
+    footer {
+      max-width: 1480px;
+      margin: 0 auto;
+      color: var(--muted);
+      border-top: 1px solid var(--line);
+      padding-top: 24px;
+      font-size: 14px;
+    }
+    script[type="application/json"] { display: none; }
+    @media (max-width: 720px) {
+      .hero { min-height: 64vh; padding-top: 72px; }
+      .subtitle { font-size: 18px; }
+      .video-grid { grid-template-columns: 1fr; }
+      dl { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-inner">
+      <p class="eyebrow">Generalizable Video Object Removal</p>
+      <h1>GenEraser: Generalizable Video Object Removal via Balanced Text-Mask Guidance and Decoupled Locator-Preserver</h1>
+      <p class="subtitle">Examples are grouped by removable effect category. Clips shorter than three seconds are slowed down by reducing their playback fps while preserving every retained frame and the original video resolution.</p>
+      <div class="stats">
+        <div class="stat"><strong>57</strong><span>video examples</span></div>
+        <div class="stat"><strong>10</strong><span>fps-adjusted clips</span></div>
+        <div class="stat"><strong>6</strong><span>effect categories</span></div>
+      </div>
+    </div>
+  </header>
+  <nav class="nav" aria-label="Effect categories">
+    <a class="pill" href="#deformation">Deformation <span>14</span></a>
+<a class="pill" href="#reflection">Reflection <span>7</span></a>
+<a class="pill" href="#light">Light <span>13</span></a>
+<a class="pill" href="#smoke">Smoke <span>10</span></a>
+<a class="pill" href="#mirror">Mirror <span>6</span></a>
+<a class="pill" href="#shadow">Shadow <span>7</span></a>
+  </nav>
+  <main>
+    
+            <section id="deformation" class="category-section">
+              <div class="section-heading">
+                <p>Effect Category</p>
+                <h2>Deformation</h2>
+              </div>
+              <div class="video-grid">
+                
+                <article class="video-card">
+                  <video src="static/videos/GenEraser/Deformation/deformation_01_processed_boat4_control_mask_methods_81f_3.mp4" controls muted loop playsinline preload="metadata"></video>
+                  <div class="video-meta">
+                    <h3>Deformation #01</h3>
+                    <p>processed_boat4_control_mask_methods_81f_3s.mp4</p>
+                    <dl>
+                      <div><dt>Frames</dt><dd>81</dd></div>
+                      <div><dt>FPS</dt><dd>27.00</dd></div>
+                      <div><dt>Duration</dt><dd>3.00s</dd></div>
+                      <div><dt>Crop</dt><dd>full</dd></div>
+                    </dl>
+                    <span class="badge">native duration</span>
+                  </div>
+                </article>
+                
+                <article class="video-card">
+                  <video src="static/videos/GenEraser/Deformation/deformation_02_processed_boat_and_people5_control_mask_me.mp4" controls muted loop playsinline preload="metadata"></video>
+                  <div class="video-meta">
+                    <h3>Deformation #02</h3>
+                    <p>processed_boat and people5_control_mask_methods_81f_3s.mp4</p>
+                    <dl>
+                      <div><dt>Frames</dt><dd>81</dd></div>
+                      <div><dt>FPS</dt><dd>27.00</dd></div>
+                      <div><dt>Duration</dt><dd>3.00s</dd></div>
+                      <div><dt>Crop</dt><dd>full</dd></div>
+                    </dl>
+                    <span class="badge">native duration</span>
+                  </div>
+                </article>
+                
+                <article class="video-card">
+                  <video src="static/videos/GenEraser/Deformation/deformation_03_processed_umbrella1_control_mask_methods_8.mp4" controls muted loop playsinline preload="metadata"></video>
+                  <div class="video-meta">
+                    <h3>Deformation #03</h3>
+                    <p>processed_umbrella1_control_mask_methods_81f_3s.mp4</p>
+                    <dl>
+                      <div><dt>Frames</dt><dd>61</dd></div>
+                      <div><dt>FPS</dt><dd>20.33</dd></div>
+                      <div><dt>Duration</dt><dd>3.00s</dd></div>
+                      <div><dt>Crop</dt><dd>3/4</dd></div>
+                    </dl>
+                    <span class="badge">fps adjusted to 3s</span>
+                  </div>
+                </article>
+                
+                <article class="video-card">
+                  <video src="static/videos/GenEraser/Deformation/deformation_04_27895936_control_mask_methods_81f_3s.mp4" controls muted loop playsinline preload="metadata"></video>
+                  <div class="video-meta">
+                    <h3>Deformation #04</h3>
+                    <p>27895936_control_mask_methods_81f_3s.mp4</p>
+                    <dl>
+                      <div><dt>Frames</dt><dd>81</dd></div>
+                      <div><dt>FPS</dt><dd>27.00</dd></div>
+                      <div><dt>Duration</dt><dd>3.00s</dd></div>
+                      <div><dt>Crop</dt><dd>full</dd></div>
+                    </dl>
+                    <span class="badge">native duration</span>
+                  </div>
+                </article>
+                
+                <article class="video-card">
+                  <video src="static/videos/GenEraser/Deformation/deformation_05_processed_swan15_control_mask_methods_81f_.mp4" controls muted loop playsinline preload="metadata"></video>
+                  <div class="video-meta">
+                    <h3>Deformation #05</h3>
+                    <p>processed_swan15_control_mask_methods_81f_3s.mp4</p>
+                    <dl>
+                      <div><dt>Frames</dt><dd>81</dd></div>
+                      <div><dt>FPS</dt><dd>27.00</dd></div>
+                      <div><dt>Duration</dt><dd>3.00s</dd></div>
+                      <div><dt>Crop</dt><dd>full</dd></div>
+                    </dl>
+                    <span class="badge">native duration</span>
+                  </div>
+                </article>
+                
+                <article class="video-card">
+                  <video src="static/videos/GenEraser/Deformation/deformation_06_processed_swan3_control_mask_methods_81f_3.mp4" controls muted loop playsinline preload="metadata"></video>
+                  <div class="video-meta">
+                    <h3>Deformation #06</h3>
+                    <p>processed_swan3_control_mask_methods_81f_3s.mp4</p>
+                    <dl>
+                      <div><dt>Frames</dt><dd>81</dd></div>
+                      <div><dt>FPS</dt><dd>27.00</dd></div>
+                      <div><dt>Duration</dt><dd>3.00s</dd></div>
+                      <div><dt>Crop</dt><dd>full</dd></div>
+                    </dl>
+                    <span class="badge">native duration</span>
+                  </div>
+                </article>
+                
+                <article class="video-card">
+                  <video src="static/videos/GenEraser/Deformation/deformation_07_wild_env002_00083_control_mask_methods_81f.mp4" controls muted loop playsinline preload="metadata"></video>
+                  <div class="video-meta">
+                    <h3>Deformation #07</h3>
+                    <p>WILD_ENV002_00083_control_mask_methods_81f_3s.mp4</p>
+                    <dl>
+                      <div><dt>Frames</dt><dd>81</dd></div>
+                      <div><dt>FPS</dt><dd>27.00</dd></div>
+                      <div><dt>Duration</dt><dd>3.00s</dd></div>
+                      <div><dt>Crop</dt><dd>full</dd></div>
+                    </dl>
+                    <span class="badge">native duration</span>
+                  </div>
+                </article>
+                
+                <article class="video-card">
+                  <video src="static/videos/GenEraser/Deformation/deformation_08_processed_duck_control_mask_methods_81f_3s.mp4" controls muted loop playsinline preload="metadata"></video>
+                  <div class="video-meta">
+                    <h3>Deformation #08</h3>
+                    <p>processed_duck_control_mask_methods_81f_3s.mp4</p>
+                    <dl>
+                      <div><dt>Frames</dt><dd>81</dd></div>
+                      <div><dt>FPS</dt><dd>27.00</dd></div>
+                      <div><dt>Duration</dt><dd>3.00s</dd></div>
+                      <div><dt>Crop</dt><dd>full</dd></div>
+                    </dl>
+                    <span class="badge">native duration</span>
+                  </div>
+                </article>
+                
+                <article class="video-card">
+                  <video src="static/videos/GenEraser/Deformation/deformation_09_processed_boat16_control_mask_methods_81f_.mp4" controls muted loop playsinline preload="metadata"></video>
+                  <div class="video-meta">
+                    <h3>Deformation #09</h3>
+                    <p>processed_boat16_control_mask_methods_81f_3s.mp4</p>
+                    <dl>
+                      <div><dt>Frames</dt><dd>49</dd></div>
+                      <div><dt>FPS</dt><dd>16.33</dd></div>
+                      <div><dt>Duration</dt><dd>3.00s</dd></div>
+                      <div><dt>Crop</dt><dd>full</dd></div>
+                    </dl>
+                    <span class="badge">fps adjusted to 3s</span>
+                  </div>
+                </article>
+                
+                <article class="video-card">
+                  <video src="static/videos/GenEraser/Deformation/deformation_10_processed_boat_and_people_control_mask_met.mp4" controls muted loop playsinline preload="metadata"></video>
+                  <div class="video-meta">
+                    <h3>Deformation #10</h3>
+                    <p>processed_boat and people_control_mask_methods_81f_3s.mp4</p>
+                    <dl>
+                      <div><dt>Frames</dt><dd>41</dd></div>
+                      <div><dt>FPS</dt><dd>13.67</dd></div>
+                      <div><dt>Duration</dt><dd>3.00s</dd></div>
+                      <div><dt>Crop</dt><dd>1/2</dd></div>
+                    </dl>
+                    <span class="badge">fps adjusted to 3s</span>
+                  </div>
+                </article>
+                
+                <article class="video-card">
+                  <video src="static/videos/GenEraser/Deformation/deformation_11_processed_bird4_control_mask_methods_81f_3.mp4" controls muted loop playsinline preload="metadata"></video>
+                  <div class="video-meta">
+                    <h3>Deformation #11</h3>
+                    <p>processed_bird4_control_mask_methods_81f_3s.mp4</p>
+                    <dl>
+                      <div><dt>Frames</dt><dd>81</dd></div>
+                      <div><dt>FPS</dt><dd>27.00</dd></div>
+                      <div><dt>Duration</dt><dd>3.00s</dd></div>
+                      <div><dt>Crop</dt><dd>full</dd></div>
+                    </dl>
+                    <span class="badge">native duration</span>
+                  </div>
+                </article>
+                
+                <article class="video-card">
+                  <video src="static/videos/GenEraser/Deformation/deformation_12_processed_bird14_control_mask_methods_81f_.mp4" controls muted loop playsinline preload="metadata"></video>
+                  <div class="video-meta">
+                    <h3>Deformation #12</h3>
+                    <p>processed_bird14_control_mask_methods_81f_3s.mp4</p>
+                    <dl>
+                      <div><dt>Frames</dt><dd>81</dd></div>
+                      <div><dt>FPS</dt><dd>27.00</dd></div>
+                      <div><dt>Duration</dt><dd>3.00s</dd></div>
+                      <div><dt>Crop</dt><dd>full</dd></div>
+                    </dl>
+                    <span class="badge">native duration</span>
+                  </div>
+                </article>
+                
+                <article class="video-card">
+                  <video src="static/videos/GenEraser/Deformation/deformation_13_processed_boat23_control_mask_methods_81f_.mp4" controls muted loop playsinline preload="metadata"></video>
+                  <div class="video-meta">
+                    <h3>Deformation #13</h3>
+                    <p>processed_boat23_control_mask_methods_81f_3s.mp4</p>
+                    <dl>
+                      <div><dt>Frames</dt><dd>65</dd></div>
+                      <div><dt>FPS</dt><dd>21.67</dd></div>
+                      <div><dt>Duration</dt><dd>3.00s</dd></div>
+                      <div><dt>Crop</dt><dd>full</dd></div>
+                    </dl>
+                    <span class="badge">fps adjusted to 3s</span>
+                  </div>
+                </article>
+                
+                <article class="video-card">
+                  <video src="static/videos/GenEraser/Deformation/deformation_14_wild_env002_00097_control_mask_methods_81f.mp4" controls muted loop playsinline preload="metadata"></video>
+                  <div class="video-meta">
+                    <h3>Deformation #14</h3>
+                    <p>WILD_ENV002_00097_control_mask_methods_81f_3s.mp4</p>
+                    <dl>
+                      <div><dt>Frames</dt><dd>81</dd></div>
+                      <div><dt>FPS</dt><dd>27.00</dd></div>
+                      <div><dt>Duration</dt><dd>3.00s</dd></div>
+                      <div><dt>Crop</dt><dd>full</dd></div>
+                    </dl>
+                    <span class="badge">native duration</span>
+                  </div>
+                </article>
+                
+              </div>
+            </section>
+            
+            <section id="reflection" class="category-section">
+              <div class="section-heading">
+                <p>Effect Category</p>
+                <h2>Reflection</h2>
+              </div>
+              <div class="video-grid">
+                
+                <article class="video-card">
+                  <video src="static/videos/GenEraser/Reflection/reflection_01_4210440_control_mask_methods_81f_3s.mp4" controls muted loop playsinline preload="metadata"></video>
+                  <div class="video-meta">
+                    <h3>Reflection #01</h3>
+                    <p>4210440_control_mask_methods_81f_3s.mp4</p>
+                    <dl>
+                      <div><dt>Frames</dt><dd>33</dd></div>
+                      <div><dt>FPS</dt><dd>11.00</dd></div>
+                      <div><dt>Duration</dt><dd>3.00s</dd></div>
+                      <div><dt>Crop</dt><dd>full</dd></div>
+                    </dl>
+                    <span class="badge">fps adjusted to 3s</span>
+                  </div>
+                </article>
+                
+                <article class="video-card">
+                  <video src="static/videos/GenEraser/Reflection/reflection_02_33565971_control_mask_methods_81f_3s.mp4" controls muted loop playsinline preload="metadata"></video>
+                  <div class="video-meta">
+                    <h3>Reflection #02</h3>
+                    <p>33565971_control_mask_methods_81f_3s.mp4</p>
+                    <dl>
+                      <div><dt>Frames</dt><dd>81</dd></div>
+                      <div><dt>FPS</dt><dd>27.00</dd></div>
+                      <div><dt>Duration</dt><dd>3.00s</dd></div>
+                      <div><dt>Crop</dt><dd>full</dd></div>
+                    </dl>
+                    <span class="badge">native duration</span>
+                  </div>
+                </article>
+                
+                <article class="video-card">
+                  <video src="static/videos/GenEraser/Reflection/reflection_03_34863830_control_mask_methods_81f_3s.mp4" controls muted loop playsinline preload="metadata"></video>
+                  <div class="video-meta">
+                    <h3>Reflection #03</h3>
+                    <p>34863830_control_mask_methods_81f_3s.mp4</p>
+                    <dl>
+                      <div><dt>Frames</dt><dd>81</dd></div>
+                      <div><dt>FPS</dt><dd>27.00</dd></div>
+                      <div><dt>Duration</dt><dd>3.00s</dd></div>
+                      <div><dt>Crop</dt><dd>full</dd></div>
+                    </dl>
+                    <span class="badge">native duration</span>
+                  </div>
+                </article>
+                
+                <article class="video-card">
+                  <video src="static/videos/GenEraser/Reflection/reflection_04_wild_env002_00047_control_mask_methods_81f.mp4" controls muted loop playsinline preload="metadata"></video>
+                  <div class="video-meta">
+                    <h3>Reflection #04</h3>
+                    <p>WILD_ENV002_00047_control_mask_methods_81f_3s.mp4</p>
+                    <dl>
+                      <div><dt>Frames</dt><dd>81</dd></div>
+                      <div><dt>FPS</dt><dd>27.00</dd></div>
+                      <div><dt>Duration</dt><dd>3.00s</dd></div>
+                      <div><dt>Crop</dt><dd>full</dd></div>
+                    </dl>
+                    <span class="badge">native duration</span>
+                  </div>
+                </article>
+                
+                <article class="video-card">
+                  <video src="static/videos/GenEraser/Reflection/reflection_05_wild_env002_00081_control_mask_methods_81f.mp4" controls muted loop playsinline preload="metadata"></video>
+                  <div class="video-meta">
+                    <h3>Reflection #05</h3>
+                    <p>WILD_ENV002_00081_control_mask_methods_81f_3s.mp4</p>
+                    <dl>
+                      <div><dt>Frames</dt><dd>81</dd></div>
+                      <div><dt>FPS</dt><dd>27.00</dd></div>
+                      <div><dt>Duration</dt><dd>3.00s</dd></div>
+                      <div><dt>Crop</dt><dd>full</dd></div>
+                    </dl>
+                    <span class="badge">native duration</span>
+                  </div>
+                </article>
+                
+                <article class="video-card">
+                  <video src="static/videos/GenEraser/Reflection/reflection_06_processed_mountain_control_mask_methods_81.mp4" controls muted loop playsinline preload="metadata"></video>
+                  <div class="video-meta">
+                    <h3>Reflection #06</h3>
+                    <p>processed_Mountain_control_mask_methods_81f_3s.mp4</p>
+                    <dl>
+                      <div><dt>Frames</dt><dd>81</dd></div>
+                      <div><dt>FPS</dt><dd>27.00</dd></div>
+                      <div><dt>Duration</dt><dd>3.00s</dd></div>
+                      <div><dt>Crop</dt><dd>full</dd></div>
+                    </dl>
+                    <span class="badge">native duration</span>
+                  </div>
+                </article>
+                
+                <article class="video-card">
+                  <video src="static/videos/GenEraser/Reflection/reflection_07_processed_people26_control_mask_methods_81.mp4" controls muted loop playsinline preload="metadata"></video>
+                  <div class="video-meta">
+                    <h3>Reflection #07</h3>
+                    <p>processed_people26_control_mask_methods_81f_3s.mp4</p>
+                    <dl>
+                      <div><dt>Frames</dt><dd>81</dd></div>
+                      <div><dt>FPS</dt><dd>27.00</dd></div>
+                      <div><dt>Duration</dt><dd>3.00s</dd></div>
+                      <div><dt>Crop</dt><dd>full</dd></div>
+                    </dl>
+                    <span class="badge">native duration</span>
+                  </div>
+                </article>
+                
+              </div>
+            </section>
+            
+            <section id="light" class="category-section">
+              <div class="section-heading">
+                <p>Effect Category</p>
+                <h2>Light</h2>
+              </div>
+              <div class="video-grid">
+                
+                <article class="video-card">
+                  <video src="static/videos/GenEraser/Light/light_01_8bb8e168f64b9b5de06d03836d4688b0_org_contr.mp4" controls muted loop playsinline preload="metadata"></video>
+                  <div class="video-meta">
+                    <h3>Light #01</h3>
+                    <p>8bb8e168f64b9b5de06d03836d4688b0_org_control_mask_methods_81f_3s.mp4</p>
+                    <dl>
+                      <div><dt>Frames</dt><dd>81</dd></div>
+                      <div><dt>FPS</dt><dd>27.00</dd></div>
+                      <div><dt>Duration</dt><dd>3.00s</dd></div>
+                      <div><dt>Crop</dt><dd>full</dd></div>
+                    </dl>
+                    <span class="badge">native duration</span>
+                  </div>
+                </article>
+                
+                <article class="video-card">
+                  <video src="static/videos/GenEraser/Light/light_02_70fafe750da3953c213f4bf4018ca042_org_contr.mp4" controls muted loop playsinline preload="metadata"></video>
+                  <div class="video-meta">
+                    <h3>Light #02</h3>
+                    <p>70fafe750da3953c213f4bf4018ca042_org_control_mask_methods_81f_3s.mp4</p>
+                    <dl>
+                      <div><dt>Frames</dt><dd>81</dd></div>
+                      <div><dt>FPS</dt><dd>27.00</dd></div>
+                      <div><dt>Duration</dt><dd>3.00s</dd></div>
+                      <div><dt>Crop</dt><dd>full</dd></div>
+                    </dl>
+                    <span class="badge">native duration</span>
+                  </div>
+                </article>
+                
+                <article class="video-card">
+                  <video src="static/videos/GenEraser/Light/light_03_19225302_control_mask_methods_81f_3s.mp4" controls muted loop playsinline preload="metadata"></video>
+                  <div class="video-meta">
+                    <h3>Light #03</h3>
+                    <p>19225302_control_mask_methods_81f_3s.mp4</p>
+                    <dl>
+                      <div><dt>Frames</dt><dd>81</dd></div>
+                      <div><dt>FPS</dt><dd>27.00</dd></div>
+                      <div><dt>Duration</dt><dd>3.00s</dd></div>
+                      <div><dt>Crop</dt><dd>full</dd></div>
+                    </dl>
+                    <span class="badge">native duration</span>
+                  </div>
+                </article>
+                
+                <article class="video-card">
+                  <video src="static/videos/GenEraser/Light/light_04_3207960_control_mask_methods_81f_3s.mp4" controls muted loop playsinline preload="metadata"></video>
+                  <div class="video-meta">
+                    <h3>Light #04</h3>
+                    <p>3207960_control_mask_methods_81f_3s.mp4</p>
+                    <dl>
+                      <div><dt>Frames</dt><dd>81</dd></div>
+                      <div><dt>FPS</dt><dd>27.00</dd></div>
+                      <div><dt>Duration</dt><dd>3.00s</dd></div>
+                      <div><dt>Crop</dt><dd>full</dd></div>
+                    </dl>
+                    <span class="badge">native duration</span>
+                  </div>
+                </article>
+                
+                <article class="video-card">
+                  <video src="static/videos/GenEraser/Light/light_05_7121776_control_mask_methods_81f_3s.mp4" controls muted loop playsinline preload="metadata"></video>
+                  <div class="video-meta">
+                    <h3>Light #05</h3>
+                    <p>7121776_control_mask_methods_81f_3s.mp4</p>
+                    <dl>
+                      <div><dt>Frames</dt><dd>81</dd></div>
+                      <div><dt>FPS</dt><dd>27.00</dd></div>
+                      <div><dt>Duration</dt><dd>3.00s</dd></div>
+                      <div><dt>Crop</dt><dd>full</dd></div>
+                    </dl>
+                    <span class="badge">native duration</span>
+                  </div>
+                </article>
+                
+                <article class="video-card">
+                  <video src="static/videos/GenEraser/Light/light_06_35031164_control_mask_methods_81f_3s.mp4" controls muted loop playsinline preload="metadata"></video>
+                  <div class="video-meta">
+                    <h3>Light #06</h3>
+                    <p>35031164_control_mask_methods_81f_3s.mp4</p>
+                    <dl>
+                      <div><dt>Frames</dt><dd>81</dd></div>
+                      <div><dt>FPS</dt><dd>27.00</dd></div>
+                      <div><dt>Duration</dt><dd>3.00s</dd></div>
+                      <div><dt>Crop</dt><dd>full</dd></div>
+                    </dl>
+                    <span class="badge">native duration</span>
+                  </div>
+                </article>
+                
+                <article class="video-card">
+                  <video src="static/videos/GenEraser/Light/light_07_35198281_control_mask_methods_81f_3s.mp4" controls muted loop playsinline preload="metadata"></video>
+                  <div class="video-meta">
+                    <h3>Light #07</h3>
+                    <p>35198281_control_mask_methods_81f_3s.mp4</p>
+                    <dl>
+                      <div><dt>Frames</dt><dd>33</dd></div>
+                      <div><dt>FPS</dt><dd>11.00</dd></div>
+                      <div><dt>Duration</dt><dd>3.00s</dd></div>
+                      <div><dt>Crop</dt><dd>full</dd></div>
+                    </dl>
+                    <span class="badge">fps adjusted to 3s</span>
+                  </div>
+                </article>
+                
+                <article class="video-card">
+                  <video src="static/videos/GenEraser/Light/light_08_af78ed2cc17867bd90f4874d0c646302_org_contr.mp4" controls muted loop playsinline preload="metadata"></video>
+                  <div class="video-meta">
+                    <h3>Light #08</h3>
+                    <p>af78ed2cc17867bd90f4874d0c646302_org_control_mask_methods_81f_3s.mp4</p>
+                    <dl>
+                      <div><dt>Frames</dt><dd>81</dd></div>
+                      <div><dt>FPS</dt><dd>27.00</dd></div>
+                      <div><dt>Duration</dt><dd>3.00s</dd></div>
+                      <div><dt>Crop</dt><dd>full</dd></div>
+                    </dl>
+                    <span class="badge">native duration</span>
+                  </div>
+                </article>
+                
+                <article class="video-card">
+                  <video src="static/videos/GenEraser/Light/light_09_processed_lamp_control_mask_methods_81f_3s.mp4" controls muted loop playsinline preload="metadata"></video>
+                  <div class="video-meta">
+                    <h3>Light #09</h3>
+                    <p>processed_lamp_control_mask_methods_81f_3s.mp4</p>
+                    <dl>
+                      <div><dt>Frames</dt><dd>81</dd></div>
+                      <div><dt>FPS</dt><dd>27.00</dd></div>
+                      <div><dt>Duration</dt><dd>3.00s</dd></div>
+                      <div><dt>Crop</dt><dd>full</dd></div>
+                    </dl>
+                    <span class="badge">native duration</span>
+                  </div>
+                </article>
+                
+                <article class="video-card">
+                  <video src="static/videos/GenEraser/Light/light_10_processed_street_lamp_control_mask_methods.mp4" controls muted loop playsinline preload="metadata"></video>
+                  <div class="video-meta">
+                    <h3>Light #10</h3>
+                    <p>processed_street lamp_control_mask_methods_81f_3s.mp4</p>
+                    <dl>
+                      <div><dt>Frames</dt><dd>81</dd></div>
+                      <div><dt>FPS</dt><dd>27.00</dd></div>
+                      <div><dt>Duration</dt><dd>3.00s</dd></div>
+                      <div><dt>Crop</dt><dd>full</dd></div>
+                    </dl>
+                    <span class="badge">native duration</span>
+                  </div>
+                </article>
+                
+                <article class="video-card">
+                  <video src="static/videos/GenEraser/Light/light_11_wild_env001_00013_control_mask_methods_81f.mp4" controls muted loop playsinline preload="metadata"></video>
+                  <div class="video-meta">
+                    <h3>Light #11</h3>
+                    <p>WILD_ENV001_00013_control_mask_methods_81f_3s.mp4</p>
+                    <dl>
+                      <div><dt>Frames</dt><dd>81</dd></div>
+                      <div><dt>FPS</dt><dd>27.00</dd></div>
+                      <div><dt>Duration</dt><dd>3.00s</dd></div>
+                      <div><dt>Crop</dt><dd>full</dd></div>
+                    </dl>
+                    <span class="badge">native duration</span>
+                  </div>
+                </article>
+                
+                <article class="video-card">
+                  <video src="static/videos/GenEraser/Light/light_12_wild_env002_00056_control_mask_methods_81f.mp4" controls muted loop playsinline preload="metadata"></video>
+                  <div class="video-meta">
+                    <h3>Light #12</h3>
+                    <p>WILD_ENV002_00056_control_mask_methods_81f_3s.mp4</p>
+                    <dl>
+                      <div><dt>Frames</dt><dd>81</dd></div>
+                      <div><dt>FPS</dt><dd>27.00</dd></div>
+                      <div><dt>Duration</dt><dd>3.00s</dd></div>
+                      <div><dt>Crop</dt><dd>full</dd></div>
+                    </dl>
+                    <span class="badge">native duration</span>
+                  </div>
+                </article>
+                
+                <article class="video-card">
+                  <video src="static/videos/GenEraser/Light/light_13_wild_env002_00010_control_mask_methods_81f.mp4" controls muted loop playsinline preload="metadata"></video>
+                  <div class="video-meta">
+                    <h3>Light #13</h3>
+                    <p>WILD_ENV002_00010_control_mask_methods_81f_3s.mp4</p>
+                    <dl>
+                      <div><dt>Frames</dt><dd>81</dd></div>
+                      <div><dt>FPS</dt><dd>27.00</dd></div>
+                      <div><dt>Duration</dt><dd>3.00s</dd></div>
+                      <div><dt>Crop</dt><dd>full</dd></div>
+                    </dl>
+                    <span class="badge">native duration</span>
+                  </div>
+                </article>
+                
+              </div>
+            </section>
+            
+            <section id="smoke" class="category-section">
+              <div class="section-heading">
+                <p>Effect Category</p>
+                <h2>Smoke</h2>
+              </div>
+              <div class="video-grid">
+                
+                <article class="video-card">
+                  <video src="static/videos/GenEraser/Smoke/smoke_01_processed_7277932_uhd_3840_2160_25fps_cont.mp4" controls muted loop playsinline preload="metadata"></video>
+                  <div class="video-meta">
+                    <h3>Smoke #01</h3>
+                    <p>processed_7277932-uhd_3840_2160_25fps_control_mask_methods_81f_3s.mp4</p>
+                    <dl>
+                      <div><dt>Frames</dt><dd>81</dd></div>
+                      <div><dt>FPS</dt><dd>27.00</dd></div>
+                      <div><dt>Duration</dt><dd>3.00s</dd></div>
+                      <div><dt>Crop</dt><dd>full</dd></div>
+                    </dl>
+                    <span class="badge">native duration</span>
+                  </div>
+                </article>
+                
+                <article class="video-card">
+                  <video src="static/videos/GenEraser/Smoke/smoke_02_processed_5835662_uhd_3840_2160_25fps_cont.mp4" controls muted loop playsinline preload="metadata"></video>
+                  <div class="video-meta">
+                    <h3>Smoke #02</h3>
+                    <p>processed_5835662-uhd_3840_2160_25fps_control_mask_methods_81f_3s.mp4</p>
+                    <dl>
+                      <div><dt>Frames</dt><dd>65</dd></div>
+                      <div><dt>FPS</dt><dd>21.67</dd></div>
+                      <div><dt>Duration</dt><dd>3.00s</dd></div>
+                      <div><dt>Crop</dt><dd>full</dd></div>
+                    </dl>
+                    <span class="badge">fps adjusted to 3s</span>
+                  </div>
+                </article>
+                
+                <article class="video-card">
+                  <video src="static/videos/GenEraser/Smoke/smoke_03_processed_20736942_hd_1080_1920_30fps_cont.mp4" controls muted loop playsinline preload="metadata"></video>
+                  <div class="video-meta">
+                    <h3>Smoke #03</h3>
+                    <p>processed_20736942-hd_1080_1920_30fps_control_mask_methods_81f_3s.mp4</p>
+                    <dl>
+                      <div><dt>Frames</dt><dd>81</dd></div>
+                      <div><dt>FPS</dt><dd>27.00</dd></div>
+                      <div><dt>Duration</dt><dd>3.00s</dd></div>
+                      <div><dt>Crop</dt><dd>full</dd></div>
+                    </dl>
+                    <span class="badge">native duration</span>
+                  </div>
+                </article>
+                
+                <article class="video-card">
+                  <video src="static/videos/GenEraser/Smoke/smoke_04_processed_15272023_1080_1920_30fps_control.mp4" controls muted loop playsinline preload="metadata"></video>
+                  <div class="video-meta">
+                    <h3>Smoke #04</h3>
+                    <p>processed_15272023_1080_1920_30fps_control_mask_methods_81f_3s.mp4</p>
+                    <dl>
+                      <div><dt>Frames</dt><dd>81</dd></div>
+                      <div><dt>FPS</dt><dd>27.00</dd></div>
+                      <div><dt>Duration</dt><dd>3.00s</dd></div>
+                      <div><dt>Crop</dt><dd>full</dd></div>
+                    </dl>
+                    <span class="badge">native duration</span>
+                  </div>
+                </article>
+                
+                <article class="video-card">
+                  <video src="static/videos/GenEraser/Smoke/smoke_05_15a5062d09de8dc03dc543f99ac053e8_org_contr.mp4" controls muted loop playsinline preload="metadata"></video>
+                  <div class="video-meta">
+                    <h3>Smoke #05</h3>
+                    <p>15a5062d09de8dc03dc543f99ac053e8_org_control_mask_methods_81f_3s.mp4</p>
+                    <dl>
+                      <div><dt>Frames</dt><dd>81</dd></div>
+                      <div><dt>FPS</dt><dd>27.00</dd></div>
+                      <div><dt>Duration</dt><dd>3.00s</dd></div>
+                      <div><dt>Crop</dt><dd>full</dd></div>
+                    </dl>
+                    <span class="badge">native duration</span>
+                  </div>
+                </article>
+                
+                <article class="video-card">
+                  <video src="static/videos/GenEraser/Smoke/smoke_06_processed_11093331_control_mask_methods_81.mp4" controls muted loop playsinline preload="metadata"></video>
+                  <div class="video-meta">
+                    <h3>Smoke #06</h3>
+                    <p>processed_11093331_control_mask_methods_81f_3s.mp4</p>
+                    <dl>
+                      <div><dt>Frames</dt><dd>81</dd></div>
+                      <div><dt>FPS</dt><dd>27.00</dd></div>
+                      <div><dt>Duration</dt><dd>3.00s</dd></div>
+                      <div><dt>Crop</dt><dd>full</dd></div>
+                    </dl>
+                    <span class="badge">native duration</span>
+                  </div>
+                </article>
+                
+                <article class="video-card">
+                  <video src="static/videos/GenEraser/Smoke/smoke_07_processed_14854556_uhd_3840_2160_30fps_con.mp4" controls muted loop playsinline preload="metadata"></video>
+                  <div class="video-meta">
+                    <h3>Smoke #07</h3>
+                    <p>processed_14854556-uhd_3840_2160_30fps_control_mask_methods_81f_3s.mp4</p>
+                    <dl>
+                      <div><dt>Frames</dt><dd>11</dd></div>
+                      <div><dt>FPS</dt><dd>3.67</dd></div>
+                      <div><dt>Duration</dt><dd>3.00s</dd></div>
+                      <div><dt>Crop</dt><dd>1/3</dd></div>
+                    </dl>
+                    <span class="badge">fps adjusted to 3s</span>
+                  </div>
+                </article>
+                
+                <article class="video-card">
+                  <video src="static/videos/GenEraser/Smoke/smoke_08_processed_14417309_2160_3840_30fps_control.mp4" controls muted loop playsinline preload="metadata"></video>
+                  <div class="video-meta">
+                    <h3>Smoke #08</h3>
+                    <p>processed_14417309_2160_3840_30fps_control_mask_methods_81f_3s.mp4</p>
+                    <dl>
+                      <div><dt>Frames</dt><dd>81</dd></div>
+                      <div><dt>FPS</dt><dd>27.00</dd></div>
+                      <div><dt>Duration</dt><dd>3.00s</dd></div>
+                      <div><dt>Crop</dt><dd>full</dd></div>
+                    </dl>
+                    <span class="badge">native duration</span>
+                  </div>
+                </article>
+                
+                <article class="video-card">
+                  <video src="static/videos/GenEraser/Smoke/smoke_09_11721832_control_mask_methods_81f_3s.mp4" controls muted loop playsinline preload="metadata"></video>
+                  <div class="video-meta">
+                    <h3>Smoke #09</h3>
+                    <p>11721832_control_mask_methods_81f_3s.mp4</p>
+                    <dl>
+                      <div><dt>Frames</dt><dd>41</dd></div>
+                      <div><dt>FPS</dt><dd>13.67</dd></div>
+                      <div><dt>Duration</dt><dd>3.00s</dd></div>
+                      <div><dt>Crop</dt><dd>1/2</dd></div>
+                    </dl>
+                    <span class="badge">fps adjusted to 3s</span>
+                  </div>
+                </article>
+                
+                <article class="video-card">
+                  <video src="static/videos/GenEraser/Smoke/smoke_10_wild_env001_00080_control_mask_methods_81f.mp4" controls muted loop playsinline preload="metadata"></video>
+                  <div class="video-meta">
+                    <h3>Smoke #10</h3>
+                    <p>WILD_ENV001_00080_control_mask_methods_81f_3s.mp4</p>
+                    <dl>
+                      <div><dt>Frames</dt><dd>81</dd></div>
+                      <div><dt>FPS</dt><dd>27.00</dd></div>
+                      <div><dt>Duration</dt><dd>3.00s</dd></div>
+                      <div><dt>Crop</dt><dd>full</dd></div>
+                    </dl>
+                    <span class="badge">native duration</span>
+                  </div>
+                </article>
+                
+              </div>
+            </section>
+            
+            <section id="mirror" class="category-section">
+              <div class="section-heading">
+                <p>Effect Category</p>
+                <h2>Mirror</h2>
+              </div>
+              <div class="video-grid">
+                
+                <article class="video-card">
+                  <video src="static/videos/GenEraser/Mirror/mirror_01_wild_env002_00042_control_mask_methods_81f.mp4" controls muted loop playsinline preload="metadata"></video>
+                  <div class="video-meta">
+                    <h3>Mirror #01</h3>
+                    <p>WILD_ENV002_00042_control_mask_methods_81f_3s.mp4</p>
+                    <dl>
+                      <div><dt>Frames</dt><dd>81</dd></div>
+                      <div><dt>FPS</dt><dd>27.00</dd></div>
+                      <div><dt>Duration</dt><dd>3.00s</dd></div>
+                      <div><dt>Crop</dt><dd>full</dd></div>
+                    </dl>
+                    <span class="badge">native duration</span>
+                  </div>
+                </article>
+                
+                <article class="video-card">
+                  <video src="static/videos/GenEraser/Mirror/mirror_02_wild_env002_00063_control_mask_methods_81f.mp4" controls muted loop playsinline preload="metadata"></video>
+                  <div class="video-meta">
+                    <h3>Mirror #02</h3>
+                    <p>WILD_ENV002_00063_control_mask_methods_81f_3s.mp4</p>
+                    <dl>
+                      <div><dt>Frames</dt><dd>81</dd></div>
+                      <div><dt>FPS</dt><dd>27.00</dd></div>
+                      <div><dt>Duration</dt><dd>3.00s</dd></div>
+                      <div><dt>Crop</dt><dd>full</dd></div>
+                    </dl>
+                    <span class="badge">native duration</span>
+                  </div>
+                </article>
+                
+                <article class="video-card">
+                  <video src="static/videos/GenEraser/Mirror/mirror_03_wild_env002_00099_control_mask_methods_81f.mp4" controls muted loop playsinline preload="metadata"></video>
+                  <div class="video-meta">
+                    <h3>Mirror #03</h3>
+                    <p>WILD_ENV002_00099_control_mask_methods_81f_3s.mp4</p>
+                    <dl>
+                      <div><dt>Frames</dt><dd>81</dd></div>
+                      <div><dt>FPS</dt><dd>27.00</dd></div>
+                      <div><dt>Duration</dt><dd>3.00s</dd></div>
+                      <div><dt>Crop</dt><dd>full</dd></div>
+                    </dl>
+                    <span class="badge">native duration</span>
+                  </div>
+                </article>
+                
+                <article class="video-card">
+                  <video src="static/videos/GenEraser/Mirror/mirror_04_processed_6277922_uhd_3840_2160_25fps_cont.mp4" controls muted loop playsinline preload="metadata"></video>
+                  <div class="video-meta">
+                    <h3>Mirror #04</h3>
+                    <p>processed_6277922-uhd_3840_2160_25fps_control_mask_methods_81f_3s.mp4</p>
+                    <dl>
+                      <div><dt>Frames</dt><dd>49</dd></div>
+                      <div><dt>FPS</dt><dd>16.33</dd></div>
+                      <div><dt>Duration</dt><dd>3.00s</dd></div>
+                      <div><dt>Crop</dt><dd>full</dd></div>
+                    </dl>
+                    <span class="badge">fps adjusted to 3s</span>
+                  </div>
+                </article>
+                
+                <article class="video-card">
+                  <video src="static/videos/GenEraser/Mirror/mirror_05_processed_7315681_hd_1920_1080_25fps_contr.mp4" controls muted loop playsinline preload="metadata"></video>
+                  <div class="video-meta">
+                    <h3>Mirror #05</h3>
+                    <p>processed_7315681-hd_1920_1080_25fps_control_mask_methods_81f_3s.mp4</p>
+                    <dl>
+                      <div><dt>Frames</dt><dd>81</dd></div>
+                      <div><dt>FPS</dt><dd>27.00</dd></div>
+                      <div><dt>Duration</dt><dd>3.00s</dd></div>
+                      <div><dt>Crop</dt><dd>full</dd></div>
+                    </dl>
+                    <span class="badge">native duration</span>
+                  </div>
+                </article>
+                
+                <article class="video-card">
+                  <video src="static/videos/GenEraser/Mirror/mirror_06_wild_env001_00058_control_mask_methods_81f.mp4" controls muted loop playsinline preload="metadata"></video>
+                  <div class="video-meta">
+                    <h3>Mirror #06</h3>
+                    <p>WILD_ENV001_00058_control_mask_methods_81f_3s.mp4</p>
+                    <dl>
+                      <div><dt>Frames</dt><dd>81</dd></div>
+                      <div><dt>FPS</dt><dd>27.00</dd></div>
+                      <div><dt>Duration</dt><dd>3.00s</dd></div>
+                      <div><dt>Crop</dt><dd>full</dd></div>
+                    </dl>
+                    <span class="badge">native duration</span>
+                  </div>
+                </article>
+                
+              </div>
+            </section>
+            
+            <section id="shadow" class="category-section">
+              <div class="section-heading">
+                <p>Effect Category</p>
+                <h2>Shadow</h2>
+              </div>
+              <div class="video-grid">
+                
+                <article class="video-card">
+                  <video src="static/videos/GenEraser/Shadow/shadow_01_wild_env001_00050_control_mask_methods_81f.mp4" controls muted loop playsinline preload="metadata"></video>
+                  <div class="video-meta">
+                    <h3>Shadow #01</h3>
+                    <p>WILD_ENV001_00050_control_mask_methods_81f_3s.mp4</p>
+                    <dl>
+                      <div><dt>Frames</dt><dd>81</dd></div>
+                      <div><dt>FPS</dt><dd>27.00</dd></div>
+                      <div><dt>Duration</dt><dd>3.00s</dd></div>
+                      <div><dt>Crop</dt><dd>full</dd></div>
+                    </dl>
+                    <span class="badge">native duration</span>
+                  </div>
+                </article>
+                
+                <article class="video-card">
+                  <video src="static/videos/GenEraser/Shadow/shadow_02_wild_env001_00053_control_mask_methods_81f.mp4" controls muted loop playsinline preload="metadata"></video>
+                  <div class="video-meta">
+                    <h3>Shadow #02</h3>
+                    <p>WILD_ENV001_00053_control_mask_methods_81f_3s.mp4</p>
+                    <dl>
+                      <div><dt>Frames</dt><dd>81</dd></div>
+                      <div><dt>FPS</dt><dd>27.00</dd></div>
+                      <div><dt>Duration</dt><dd>3.00s</dd></div>
+                      <div><dt>Crop</dt><dd>full</dd></div>
+                    </dl>
+                    <span class="badge">native duration</span>
+                  </div>
+                </article>
+                
+                <article class="video-card">
+                  <video src="static/videos/GenEraser/Shadow/shadow_03_wild_env001_00078_control_mask_methods_81f.mp4" controls muted loop playsinline preload="metadata"></video>
+                  <div class="video-meta">
+                    <h3>Shadow #03</h3>
+                    <p>WILD_ENV001_00078_control_mask_methods_81f_3s.mp4</p>
+                    <dl>
+                      <div><dt>Frames</dt><dd>81</dd></div>
+                      <div><dt>FPS</dt><dd>27.00</dd></div>
+                      <div><dt>Duration</dt><dd>3.00s</dd></div>
+                      <div><dt>Crop</dt><dd>full</dd></div>
+                    </dl>
+                    <span class="badge">native duration</span>
+                  </div>
+                </article>
+                
+                <article class="video-card">
+                  <video src="static/videos/GenEraser/Shadow/shadow_04_wild_env002_00002_control_mask_methods_81f.mp4" controls muted loop playsinline preload="metadata"></video>
+                  <div class="video-meta">
+                    <h3>Shadow #04</h3>
+                    <p>WILD_ENV002_00002_control_mask_methods_81f_3s.mp4</p>
+                    <dl>
+                      <div><dt>Frames</dt><dd>81</dd></div>
+                      <div><dt>FPS</dt><dd>27.00</dd></div>
+                      <div><dt>Duration</dt><dd>3.00s</dd></div>
+                      <div><dt>Crop</dt><dd>full</dd></div>
+                    </dl>
+                    <span class="badge">native duration</span>
+                  </div>
+                </article>
+                
+                <article class="video-card">
+                  <video src="static/videos/GenEraser/Shadow/shadow_05_wild_env002_00037_control_mask_methods_81f.mp4" controls muted loop playsinline preload="metadata"></video>
+                  <div class="video-meta">
+                    <h3>Shadow #05</h3>
+                    <p>WILD_ENV002_00037_control_mask_methods_81f_3s.mp4</p>
+                    <dl>
+                      <div><dt>Frames</dt><dd>81</dd></div>
+                      <div><dt>FPS</dt><dd>27.00</dd></div>
+                      <div><dt>Duration</dt><dd>3.00s</dd></div>
+                      <div><dt>Crop</dt><dd>full</dd></div>
+                    </dl>
+                    <span class="badge">native duration</span>
+                  </div>
+                </article>
+                
+                <article class="video-card">
+                  <video src="static/videos/GenEraser/Shadow/shadow_06_wild_env002_00046_control_mask_methods_81f.mp4" controls muted loop playsinline preload="metadata"></video>
+                  <div class="video-meta">
+                    <h3>Shadow #06</h3>
+                    <p>WILD_ENV002_00046_control_mask_methods_81f_3s.mp4</p>
+                    <dl>
+                      <div><dt>Frames</dt><dd>81</dd></div>
+                      <div><dt>FPS</dt><dd>27.00</dd></div>
+                      <div><dt>Duration</dt><dd>3.00s</dd></div>
+                      <div><dt>Crop</dt><dd>full</dd></div>
+                    </dl>
+                    <span class="badge">native duration</span>
+                  </div>
+                </article>
+                
+                <article class="video-card">
+                  <video src="static/videos/GenEraser/Shadow/shadow_07_wild_env002_00079_control_mask_methods_81f.mp4" controls muted loop playsinline preload="metadata"></video>
+                  <div class="video-meta">
+                    <h3>Shadow #07</h3>
+                    <p>WILD_ENV002_00079_control_mask_methods_81f_3s.mp4</p>
+                    <dl>
+                      <div><dt>Frames</dt><dd>81</dd></div>
+                      <div><dt>FPS</dt><dd>27.00</dd></div>
+                      <div><dt>Duration</dt><dd>3.00s</dd></div>
+                      <div><dt>Crop</dt><dd>full</dd></div>
+                    </dl>
+                    <span class="badge">native duration</span>
+                  </div>
+                </article>
+                
+              </div>
+            </section>
+            
+    <footer>
+      <p>All videos keep their source width and height. Fractional suffixes in the list, such as 1/2 or 3/4, are interpreted as the retained portion of the original frame count.</p>
+    </footer>
+  </main>
+  <script id="clip-manifest" type="application/json">[
+  {
+    &quot;category&quot;: &quot;Deformation&quot;,
+    &quot;source&quot;: &quot;D:\\AAAStudy\\NeurIPS\\主实验\\Transfer (4)\\Transfer\\show_video\\Deformation\\processed_boat4_control_mask_methods_81f_3s.mp4&quot;,
+    &quot;limit_text&quot;: null,
+    &quot;width&quot;: 1920,
+    &quot;height&quot;: 1080,
+    &quot;source_fps&quot;: 27.0,
+    &quot;source_frames&quot;: 81,
+    &quot;keep_frames&quot;: 81,
+    &quot;output_fps&quot;: 27.0,
+    &quot;output_duration&quot;: 3.0,
+    &quot;output_relpath&quot;: &quot;static/videos/GenEraser/Deformation/deformation_01_processed_boat4_control_mask_methods_81f_3.mp4&quot;,
+    &quot;output_name&quot;: &quot;deformation_01_processed_boat4_control_mask_methods_81f_3.mp4&quot;
+  },
+  {
+    &quot;category&quot;: &quot;Deformation&quot;,
+    &quot;source&quot;: &quot;D:\\AAAStudy\\NeurIPS\\主实验\\Transfer (4)\\Transfer\\show_video\\Deformation\\processed_boat and people5_control_mask_methods_81f_3s.mp4&quot;,
+    &quot;limit_text&quot;: null,
+    &quot;width&quot;: 1920,
+    &quot;height&quot;: 1080,
+    &quot;source_fps&quot;: 27.0,
+    &quot;source_frames&quot;: 81,
+    &quot;keep_frames&quot;: 81,
+    &quot;output_fps&quot;: 27.0,
+    &quot;output_duration&quot;: 3.0,
+    &quot;output_relpath&quot;: &quot;static/videos/GenEraser/Deformation/deformation_02_processed_boat_and_people5_control_mask_me.mp4&quot;,
+    &quot;output_name&quot;: &quot;deformation_02_processed_boat_and_people5_control_mask_me.mp4&quot;
+  },
+  {
+    &quot;category&quot;: &quot;Deformation&quot;,
+    &quot;source&quot;: &quot;D:\\AAAStudy\\NeurIPS\\主实验\\Transfer (4)\\Transfer\\show_video\\Deformation\\processed_umbrella1_control_mask_methods_81f_3s.mp4&quot;,
+    &quot;limit_text&quot;: &quot;3/4&quot;,
+    &quot;width&quot;: 1920,
+    &quot;height&quot;: 1080,
+    &quot;source_fps&quot;: 27.0,
+    &quot;source_frames&quot;: 81,
+    &quot;keep_frames&quot;: 61,
+    &quot;output_fps&quot;: 20.333333333333332,
+    &quot;output_duration&quot;: 3.0,
+    &quot;output_relpath&quot;: &quot;static/videos/GenEraser/Deformation/deformation_03_processed_umbrella1_control_mask_methods_8.mp4&quot;,
+    &quot;output_name&quot;: &quot;deformation_03_processed_umbrella1_control_mask_methods_8.mp4&quot;
+  },
+  {
+    &quot;category&quot;: &quot;Deformation&quot;,
+    &quot;source&quot;: &quot;D:\\AAAStudy\\NeurIPS\\主实验\\Transfer (4)\\Transfer\\show_video\\Deformation\\27895936_control_mask_methods_81f_3s.mp4&quot;,
+    &quot;limit_text&quot;: null,
+    &quot;width&quot;: 1920,
+    &quot;height&quot;: 1080,
+    &quot;source_fps&quot;: 27.0,
+    &quot;source_frames&quot;: 81,
+    &quot;keep_frames&quot;: 81,
+    &quot;output_fps&quot;: 27.0,
+    &quot;output_duration&quot;: 3.0,
+    &quot;output_relpath&quot;: &quot;static/videos/GenEraser/Deformation/deformation_04_27895936_control_mask_methods_81f_3s.mp4&quot;,
+    &quot;output_name&quot;: &quot;deformation_04_27895936_control_mask_methods_81f_3s.mp4&quot;
+  },
+  {
+    &quot;category&quot;: &quot;Deformation&quot;,
+    &quot;source&quot;: &quot;D:\\AAAStudy\\NeurIPS\\主实验\\Transfer (4)\\Transfer\\show_video\\Deformation\\processed_swan15_control_mask_methods_81f_3s.mp4&quot;,
+    &quot;limit_text&quot;: null,
+    &quot;width&quot;: 1920,
+    &quot;height&quot;: 1080,
+    &quot;source_fps&quot;: 27.0,
+    &quot;source_frames&quot;: 81,
+    &quot;keep_frames&quot;: 81,
+    &quot;output_fps&quot;: 27.0,
+    &quot;output_duration&quot;: 3.0,
+    &quot;output_relpath&quot;: &quot;static/videos/GenEraser/Deformation/deformation_05_processed_swan15_control_mask_methods_81f_.mp4&quot;,
+    &quot;output_name&quot;: &quot;deformation_05_processed_swan15_control_mask_methods_81f_.mp4&quot;
+  },
+  {
+    &quot;category&quot;: &quot;Deformation&quot;,
+    &quot;source&quot;: &quot;D:\\AAAStudy\\NeurIPS\\主实验\\Transfer (4)\\Transfer\\show_video\\Deformation\\processed_swan3_control_mask_methods_81f_3s.mp4&quot;,
+    &quot;limit_text&quot;: null,
+    &quot;width&quot;: 1920,
+    &quot;height&quot;: 1080,
+    &quot;source_fps&quot;: 27.0,
+    &quot;source_frames&quot;: 81,
+    &quot;keep_frames&quot;: 81,
+    &quot;output_fps&quot;: 27.0,
+    &quot;output_duration&quot;: 3.0,
+    &quot;output_relpath&quot;: &quot;static/videos/GenEraser/Deformation/deformation_06_processed_swan3_control_mask_methods_81f_3.mp4&quot;,
+    &quot;output_name&quot;: &quot;deformation_06_processed_swan3_control_mask_methods_81f_3.mp4&quot;
+  },
+  {
+    &quot;category&quot;: &quot;Deformation&quot;,
+    &quot;source&quot;: &quot;D:\\AAAStudy\\NeurIPS\\主实验\\Transfer (4)\\Transfer\\show_video\\Deformation\\WILD_ENV002_00083_control_mask_methods_81f_3s.mp4&quot;,
+    &quot;limit_text&quot;: null,
+    &quot;width&quot;: 1920,
+    &quot;height&quot;: 1080,
+    &quot;source_fps&quot;: 27.0,
+    &quot;source_frames&quot;: 81,
+    &quot;keep_frames&quot;: 81,
+    &quot;output_fps&quot;: 27.0,
+    &quot;output_duration&quot;: 3.0,
+    &quot;output_relpath&quot;: &quot;static/videos/GenEraser/Deformation/deformation_07_wild_env002_00083_control_mask_methods_81f.mp4&quot;,
+    &quot;output_name&quot;: &quot;deformation_07_wild_env002_00083_control_mask_methods_81f.mp4&quot;
+  },
+  {
+    &quot;category&quot;: &quot;Deformation&quot;,
+    &quot;source&quot;: &quot;D:\\AAAStudy\\NeurIPS\\主实验\\Transfer (4)\\Transfer\\show_video\\Deformation\\processed_duck_control_mask_methods_81f_3s.mp4&quot;,
+    &quot;limit_text&quot;: null,
+    &quot;width&quot;: 1920,
+    &quot;height&quot;: 1080,
+    &quot;source_fps&quot;: 27.0,
+    &quot;source_frames&quot;: 81,
+    &quot;keep_frames&quot;: 81,
+    &quot;output_fps&quot;: 27.0,
+    &quot;output_duration&quot;: 3.0,
+    &quot;output_relpath&quot;: &quot;static/videos/GenEraser/Deformation/deformation_08_processed_duck_control_mask_methods_81f_3s.mp4&quot;,
+    &quot;output_name&quot;: &quot;deformation_08_processed_duck_control_mask_methods_81f_3s.mp4&quot;
+  },
+  {
+    &quot;category&quot;: &quot;Deformation&quot;,
+    &quot;source&quot;: &quot;D:\\AAAStudy\\NeurIPS\\主实验\\Transfer (4)\\Transfer\\show_video\\Deformation\\processed_boat16_control_mask_methods_81f_3s.mp4&quot;,
+    &quot;limit_text&quot;: null,
+    &quot;width&quot;: 1920,
+    &quot;height&quot;: 1080,
+    &quot;source_fps&quot;: 27.0,
+    &quot;source_frames&quot;: 49,
+    &quot;keep_frames&quot;: 49,
+    &quot;output_fps&quot;: 16.333333333333332,
+    &quot;output_duration&quot;: 3.0,
+    &quot;output_relpath&quot;: &quot;static/videos/GenEraser/Deformation/deformation_09_processed_boat16_control_mask_methods_81f_.mp4&quot;,
+    &quot;output_name&quot;: &quot;deformation_09_processed_boat16_control_mask_methods_81f_.mp4&quot;
+  },
+  {
+    &quot;category&quot;: &quot;Deformation&quot;,
+    &quot;source&quot;: &quot;D:\\AAAStudy\\NeurIPS\\主实验\\Transfer (4)\\Transfer\\show_video\\Deformation\\processed_boat and people_control_mask_methods_81f_3s.mp4&quot;,
+    &quot;limit_text&quot;: &quot;1/2&quot;,
+    &quot;width&quot;: 1920,
+    &quot;height&quot;: 1080,
+    &quot;source_fps&quot;: 27.0,
+    &quot;source_frames&quot;: 81,
+    &quot;keep_frames&quot;: 41,
+    &quot;output_fps&quot;: 13.666666666666666,
+    &quot;output_duration&quot;: 3.0,
+    &quot;output_relpath&quot;: &quot;static/videos/GenEraser/Deformation/deformation_10_processed_boat_and_people_control_mask_met.mp4&quot;,
+    &quot;output_name&quot;: &quot;deformation_10_processed_boat_and_people_control_mask_met.mp4&quot;
+  },
+  {
+    &quot;category&quot;: &quot;Deformation&quot;,
+    &quot;source&quot;: &quot;D:\\AAAStudy\\NeurIPS\\主实验\\Transfer (4)\\Transfer\\show_video\\Deformation\\processed_bird4_control_mask_methods_81f_3s.mp4&quot;,
+    &quot;limit_text&quot;: null,
+    &quot;width&quot;: 1920,
+    &quot;height&quot;: 1080,
+    &quot;source_fps&quot;: 27.0,
+    &quot;source_frames&quot;: 81,
+    &quot;keep_frames&quot;: 81,
+    &quot;output_fps&quot;: 27.0,
+    &quot;output_duration&quot;: 3.0,
+    &quot;output_relpath&quot;: &quot;static/videos/GenEraser/Deformation/deformation_11_processed_bird4_control_mask_methods_81f_3.mp4&quot;,
+    &quot;output_name&quot;: &quot;deformation_11_processed_bird4_control_mask_methods_81f_3.mp4&quot;
+  },
+  {
+    &quot;category&quot;: &quot;Deformation&quot;,
+    &quot;source&quot;: &quot;D:\\AAAStudy\\NeurIPS\\主实验\\Transfer (4)\\Transfer\\show_video\\Deformation\\processed_bird14_control_mask_methods_81f_3s.mp4&quot;,
+    &quot;limit_text&quot;: null,
+    &quot;width&quot;: 1920,
+    &quot;height&quot;: 1080,
+    &quot;source_fps&quot;: 27.0,
+    &quot;source_frames&quot;: 81,
+    &quot;keep_frames&quot;: 81,
+    &quot;output_fps&quot;: 27.0,
+    &quot;output_duration&quot;: 3.0,
+    &quot;output_relpath&quot;: &quot;static/videos/GenEraser/Deformation/deformation_12_processed_bird14_control_mask_methods_81f_.mp4&quot;,
+    &quot;output_name&quot;: &quot;deformation_12_processed_bird14_control_mask_methods_81f_.mp4&quot;
+  },
+  {
+    &quot;category&quot;: &quot;Deformation&quot;,
+    &quot;source&quot;: &quot;D:\\AAAStudy\\NeurIPS\\主实验\\Transfer (4)\\Transfer\\show_video\\Deformation\\processed_boat23_control_mask_methods_81f_3s.mp4&quot;,
+    &quot;limit_text&quot;: null,
+    &quot;width&quot;: 1920,
+    &quot;height&quot;: 1080,
+    &quot;source_fps&quot;: 27.0,
+    &quot;source_frames&quot;: 65,
+    &quot;keep_frames&quot;: 65,
+    &quot;output_fps&quot;: 21.666666666666668,
+    &quot;output_duration&quot;: 3.0,
+    &quot;output_relpath&quot;: &quot;static/videos/GenEraser/Deformation/deformation_13_processed_boat23_control_mask_methods_81f_.mp4&quot;,
+    &quot;output_name&quot;: &quot;deformation_13_processed_boat23_control_mask_methods_81f_.mp4&quot;
+  },
+  {
+    &quot;category&quot;: &quot;Deformation&quot;,
+    &quot;source&quot;: &quot;D:\\AAAStudy\\NeurIPS\\主实验\\Transfer (4)\\Transfer\\show_video\\Deformation\\WILD_ENV002_00097_control_mask_methods_81f_3s.mp4&quot;,
+    &quot;limit_text&quot;: null,
+    &quot;width&quot;: 1920,
+    &quot;height&quot;: 1080,
+    &quot;source_fps&quot;: 27.0,
+    &quot;source_frames&quot;: 81,
+    &quot;keep_frames&quot;: 81,
+    &quot;output_fps&quot;: 27.0,
+    &quot;output_duration&quot;: 3.0,
+    &quot;output_relpath&quot;: &quot;static/videos/GenEraser/Deformation/deformation_14_wild_env002_00097_control_mask_methods_81f.mp4&quot;,
+    &quot;output_name&quot;: &quot;deformation_14_wild_env002_00097_control_mask_methods_81f.mp4&quot;
+  },
+  {
+    &quot;category&quot;: &quot;Reflection&quot;,
+    &quot;source&quot;: &quot;D:\\AAAStudy\\NeurIPS\\主实验\\Transfer (4)\\Transfer\\show_video\\Reflection\\4210440_control_mask_methods_81f_3s.mp4&quot;,
+    &quot;limit_text&quot;: null,
+    &quot;width&quot;: 1920,
+    &quot;height&quot;: 1080,
+    &quot;source_fps&quot;: 27.0,
+    &quot;source_frames&quot;: 33,
+    &quot;keep_frames&quot;: 33,
+    &quot;output_fps&quot;: 11.0,
+    &quot;output_duration&quot;: 3.0,
+    &quot;output_relpath&quot;: &quot;static/videos/GenEraser/Reflection/reflection_01_4210440_control_mask_methods_81f_3s.mp4&quot;,
+    &quot;output_name&quot;: &quot;reflection_01_4210440_control_mask_methods_81f_3s.mp4&quot;
+  },
+  {
+    &quot;category&quot;: &quot;Reflection&quot;,
+    &quot;source&quot;: &quot;D:\\AAAStudy\\NeurIPS\\主实验\\Transfer (4)\\Transfer\\show_video\\Reflection\\33565971_control_mask_methods_81f_3s.mp4&quot;,
+    &quot;limit_text&quot;: null,
+    &quot;width&quot;: 1920,
+    &quot;height&quot;: 1080,
+    &quot;source_fps&quot;: 27.0,
+    &quot;source_frames&quot;: 81,
+    &quot;keep_frames&quot;: 81,
+    &quot;output_fps&quot;: 27.0,
+    &quot;output_duration&quot;: 3.0,
+    &quot;output_relpath&quot;: &quot;static/videos/GenEraser/Reflection/reflection_02_33565971_control_mask_methods_81f_3s.mp4&quot;,
+    &quot;output_name&quot;: &quot;reflection_02_33565971_control_mask_methods_81f_3s.mp4&quot;
+  },
+  {
+    &quot;category&quot;: &quot;Reflection&quot;,
+    &quot;source&quot;: &quot;D:\\AAAStudy\\NeurIPS\\主实验\\Transfer (4)\\Transfer\\show_video\\Reflection\\34863830_control_mask_methods_81f_3s.mp4&quot;,
+    &quot;limit_text&quot;: null,
+    &quot;width&quot;: 1920,
+    &quot;height&quot;: 1080,
+    &quot;source_fps&quot;: 27.0,
+    &quot;source_frames&quot;: 81,
+    &quot;keep_frames&quot;: 81,
+    &quot;output_fps&quot;: 27.0,
+    &quot;output_duration&quot;: 3.0,
+    &quot;output_relpath&quot;: &quot;static/videos/GenEraser/Reflection/reflection_03_34863830_control_mask_methods_81f_3s.mp4&quot;,
+    &quot;output_name&quot;: &quot;reflection_03_34863830_control_mask_methods_81f_3s.mp4&quot;
+  },
+  {
+    &quot;category&quot;: &quot;Reflection&quot;,
+    &quot;source&quot;: &quot;D:\\AAAStudy\\NeurIPS\\主实验\\Transfer (4)\\Transfer\\show_video\\Reflection\\WILD_ENV002_00047_control_mask_methods_81f_3s.mp4&quot;,
+    &quot;limit_text&quot;: null,
+    &quot;width&quot;: 1920,
+    &quot;height&quot;: 1080,
+    &quot;source_fps&quot;: 27.0,
+    &quot;source_frames&quot;: 81,
+    &quot;keep_frames&quot;: 81,
+    &quot;output_fps&quot;: 27.0,
+    &quot;output_duration&quot;: 3.0,
+    &quot;output_relpath&quot;: &quot;static/videos/GenEraser/Reflection/reflection_04_wild_env002_00047_control_mask_methods_81f.mp4&quot;,
+    &quot;output_name&quot;: &quot;reflection_04_wild_env002_00047_control_mask_methods_81f.mp4&quot;
+  },
+  {
+    &quot;category&quot;: &quot;Reflection&quot;,
+    &quot;source&quot;: &quot;D:\\AAAStudy\\NeurIPS\\主实验\\Transfer (4)\\Transfer\\show_video\\Reflection\\WILD_ENV002_00081_control_mask_methods_81f_3s.mp4&quot;,
+    &quot;limit_text&quot;: null,
+    &quot;width&quot;: 1920,
+    &quot;height&quot;: 1080,
+    &quot;source_fps&quot;: 27.0,
+    &quot;source_frames&quot;: 81,
+    &quot;keep_frames&quot;: 81,
+    &quot;output_fps&quot;: 27.0,
+    &quot;output_duration&quot;: 3.0,
+    &quot;output_relpath&quot;: &quot;static/videos/GenEraser/Reflection/reflection_05_wild_env002_00081_control_mask_methods_81f.mp4&quot;,
+    &quot;output_name&quot;: &quot;reflection_05_wild_env002_00081_control_mask_methods_81f.mp4&quot;
+  },
+  {
+    &quot;category&quot;: &quot;Reflection&quot;,
+    &quot;source&quot;: &quot;D:\\AAAStudy\\NeurIPS\\主实验\\Transfer (4)\\Transfer\\show_video\\Reflection\\processed_Mountain_control_mask_methods_81f_3s.mp4&quot;,
+    &quot;limit_text&quot;: null,
+    &quot;width&quot;: 1920,
+    &quot;height&quot;: 1080,
+    &quot;source_fps&quot;: 27.0,
+    &quot;source_frames&quot;: 81,
+    &quot;keep_frames&quot;: 81,
+    &quot;output_fps&quot;: 27.0,
+    &quot;output_duration&quot;: 3.0,
+    &quot;output_relpath&quot;: &quot;static/videos/GenEraser/Reflection/reflection_06_processed_mountain_control_mask_methods_81.mp4&quot;,
+    &quot;output_name&quot;: &quot;reflection_06_processed_mountain_control_mask_methods_81.mp4&quot;
+  },
+  {
+    &quot;category&quot;: &quot;Reflection&quot;,
+    &quot;source&quot;: &quot;D:\\AAAStudy\\NeurIPS\\主实验\\Transfer (4)\\Transfer\\show_video\\Reflection\\processed_people26_control_mask_methods_81f_3s.mp4&quot;,
+    &quot;limit_text&quot;: null,
+    &quot;width&quot;: 1920,
+    &quot;height&quot;: 1080,
+    &quot;source_fps&quot;: 27.0,
+    &quot;source_frames&quot;: 81,
+    &quot;keep_frames&quot;: 81,
+    &quot;output_fps&quot;: 27.0,
+    &quot;output_duration&quot;: 3.0,
+    &quot;output_relpath&quot;: &quot;static/videos/GenEraser/Reflection/reflection_07_processed_people26_control_mask_methods_81.mp4&quot;,
+    &quot;output_name&quot;: &quot;reflection_07_processed_people26_control_mask_methods_81.mp4&quot;
+  },
+  {
+    &quot;category&quot;: &quot;Light&quot;,
+    &quot;source&quot;: &quot;D:\\AAAStudy\\NeurIPS\\主实验\\Transfer (4)\\Transfer\\show_video\\Light\\8bb8e168f64b9b5de06d03836d4688b0_org_control_mask_methods_81f_3s.mp4&quot;,
+    &quot;limit_text&quot;: null,
+    &quot;width&quot;: 1920,
+    &quot;height&quot;: 1080,
+    &quot;source_fps&quot;: 27.0,
+    &quot;source_frames&quot;: 81,
+    &quot;keep_frames&quot;: 81,
+    &quot;output_fps&quot;: 27.0,
+    &quot;output_duration&quot;: 3.0,
+    &quot;output_relpath&quot;: &quot;static/videos/GenEraser/Light/light_01_8bb8e168f64b9b5de06d03836d4688b0_org_contr.mp4&quot;,
+    &quot;output_name&quot;: &quot;light_01_8bb8e168f64b9b5de06d03836d4688b0_org_contr.mp4&quot;
+  },
+  {
+    &quot;category&quot;: &quot;Light&quot;,
+    &quot;source&quot;: &quot;D:\\AAAStudy\\NeurIPS\\主实验\\Transfer (4)\\Transfer\\show_video\\Light\\70fafe750da3953c213f4bf4018ca042_org_control_mask_methods_81f_3s.mp4&quot;,
+    &quot;limit_text&quot;: null,
+    &quot;width&quot;: 1920,
+    &quot;height&quot;: 1080,
+    &quot;source_fps&quot;: 27.0,
+    &quot;source_frames&quot;: 81,
+    &quot;keep_frames&quot;: 81,
+    &quot;output_fps&quot;: 27.0,
+    &quot;output_duration&quot;: 3.0,
+    &quot;output_relpath&quot;: &quot;static/videos/GenEraser/Light/light_02_70fafe750da3953c213f4bf4018ca042_org_contr.mp4&quot;,
+    &quot;output_name&quot;: &quot;light_02_70fafe750da3953c213f4bf4018ca042_org_contr.mp4&quot;
+  },
+  {
+    &quot;category&quot;: &quot;Light&quot;,
+    &quot;source&quot;: &quot;D:\\AAAStudy\\NeurIPS\\主实验\\Transfer (4)\\Transfer\\show_video\\Light\\19225302_control_mask_methods_81f_3s.mp4&quot;,
+    &quot;limit_text&quot;: null,
+    &quot;width&quot;: 1920,
+    &quot;height&quot;: 1080,
+    &quot;source_fps&quot;: 27.0,
+    &quot;source_frames&quot;: 81,
+    &quot;keep_frames&quot;: 81,
+    &quot;output_fps&quot;: 27.0,
+    &quot;output_duration&quot;: 3.0,
+    &quot;output_relpath&quot;: &quot;static/videos/GenEraser/Light/light_03_19225302_control_mask_methods_81f_3s.mp4&quot;,
+    &quot;output_name&quot;: &quot;light_03_19225302_control_mask_methods_81f_3s.mp4&quot;
+  },
+  {
+    &quot;category&quot;: &quot;Light&quot;,
+    &quot;source&quot;: &quot;D:\\AAAStudy\\NeurIPS\\主实验\\Transfer (4)\\Transfer\\show_video\\Light\\3207960_control_mask_methods_81f_3s.mp4&quot;,
+    &quot;limit_text&quot;: null,
+    &quot;width&quot;: 1920,
+    &quot;height&quot;: 1080,
+    &quot;source_fps&quot;: 27.0,
+    &quot;source_frames&quot;: 81,
+    &quot;keep_frames&quot;: 81,
+    &quot;output_fps&quot;: 27.0,
+    &quot;output_duration&quot;: 3.0,
+    &quot;output_relpath&quot;: &quot;static/videos/GenEraser/Light/light_04_3207960_control_mask_methods_81f_3s.mp4&quot;,
+    &quot;output_name&quot;: &quot;light_04_3207960_control_mask_methods_81f_3s.mp4&quot;
+  },
+  {
+    &quot;category&quot;: &quot;Light&quot;,
+    &quot;source&quot;: &quot;D:\\AAAStudy\\NeurIPS\\主实验\\Transfer (4)\\Transfer\\show_video\\Light\\7121776_control_mask_methods_81f_3s.mp4&quot;,
+    &quot;limit_text&quot;: null,
+    &quot;width&quot;: 1920,
+    &quot;height&quot;: 1080,
+    &quot;source_fps&quot;: 27.0,
+    &quot;source_frames&quot;: 81,
+    &quot;keep_frames&quot;: 81,
+    &quot;output_fps&quot;: 27.0,
+    &quot;output_duration&quot;: 3.0,
+    &quot;output_relpath&quot;: &quot;static/videos/GenEraser/Light/light_05_7121776_control_mask_methods_81f_3s.mp4&quot;,
+    &quot;output_name&quot;: &quot;light_05_7121776_control_mask_methods_81f_3s.mp4&quot;
+  },
+  {
+    &quot;category&quot;: &quot;Light&quot;,
+    &quot;source&quot;: &quot;D:\\AAAStudy\\NeurIPS\\主实验\\Transfer (4)\\Transfer\\show_video\\Light\\35031164_control_mask_methods_81f_3s.mp4&quot;,
+    &quot;limit_text&quot;: null,
+    &quot;width&quot;: 1920,
+    &quot;height&quot;: 1080,
+    &quot;source_fps&quot;: 27.0,
+    &quot;source_frames&quot;: 81,
+    &quot;keep_frames&quot;: 81,
+    &quot;output_fps&quot;: 27.0,
+    &quot;output_duration&quot;: 3.0,
+    &quot;output_relpath&quot;: &quot;static/videos/GenEraser/Light/light_06_35031164_control_mask_methods_81f_3s.mp4&quot;,
+    &quot;output_name&quot;: &quot;light_06_35031164_control_mask_methods_81f_3s.mp4&quot;
+  },
+  {
+    &quot;category&quot;: &quot;Light&quot;,
+    &quot;source&quot;: &quot;D:\\AAAStudy\\NeurIPS\\主实验\\Transfer (4)\\Transfer\\show_video\\Light\\35198281_control_mask_methods_81f_3s.mp4&quot;,
+    &quot;limit_text&quot;: null,
+    &quot;width&quot;: 1920,
+    &quot;height&quot;: 1080,
+    &quot;source_fps&quot;: 27.0,
+    &quot;source_frames&quot;: 33,
+    &quot;keep_frames&quot;: 33,
+    &quot;output_fps&quot;: 11.0,
+    &quot;output_duration&quot;: 3.0,
+    &quot;output_relpath&quot;: &quot;static/videos/GenEraser/Light/light_07_35198281_control_mask_methods_81f_3s.mp4&quot;,
+    &quot;output_name&quot;: &quot;light_07_35198281_control_mask_methods_81f_3s.mp4&quot;
+  },
+  {
+    &quot;category&quot;: &quot;Light&quot;,
+    &quot;source&quot;: &quot;D:\\AAAStudy\\NeurIPS\\主实验\\Transfer (4)\\Transfer\\show_video\\Light\\af78ed2cc17867bd90f4874d0c646302_org_control_mask_methods_81f_3s.mp4&quot;,
+    &quot;limit_text&quot;: null,
+    &quot;width&quot;: 1920,
+    &quot;height&quot;: 1080,
+    &quot;source_fps&quot;: 27.0,
+    &quot;source_frames&quot;: 81,
+    &quot;keep_frames&quot;: 81,
+    &quot;output_fps&quot;: 27.0,
+    &quot;output_duration&quot;: 3.0,
+    &quot;output_relpath&quot;: &quot;static/videos/GenEraser/Light/light_08_af78ed2cc17867bd90f4874d0c646302_org_contr.mp4&quot;,
+    &quot;output_name&quot;: &quot;light_08_af78ed2cc17867bd90f4874d0c646302_org_contr.mp4&quot;
+  },
+  {
+    &quot;category&quot;: &quot;Light&quot;,
+    &quot;source&quot;: &quot;D:\\AAAStudy\\NeurIPS\\主实验\\Transfer (4)\\Transfer\\show_video\\Light\\processed_lamp_control_mask_methods_81f_3s.mp4&quot;,
+    &quot;limit_text&quot;: null,
+    &quot;width&quot;: 1920,
+    &quot;height&quot;: 1080,
+    &quot;source_fps&quot;: 27.0,
+    &quot;source_frames&quot;: 81,
+    &quot;keep_frames&quot;: 81,
+    &quot;output_fps&quot;: 27.0,
+    &quot;output_duration&quot;: 3.0,
+    &quot;output_relpath&quot;: &quot;static/videos/GenEraser/Light/light_09_processed_lamp_control_mask_methods_81f_3s.mp4&quot;,
+    &quot;output_name&quot;: &quot;light_09_processed_lamp_control_mask_methods_81f_3s.mp4&quot;
+  },
+  {
+    &quot;category&quot;: &quot;Light&quot;,
+    &quot;source&quot;: &quot;D:\\AAAStudy\\NeurIPS\\主实验\\Transfer (4)\\Transfer\\show_video\\Light\\processed_street lamp_control_mask_methods_81f_3s.mp4&quot;,
+    &quot;limit_text&quot;: null,
+    &quot;width&quot;: 1920,
+    &quot;height&quot;: 1080,
+    &quot;source_fps&quot;: 27.0,
+    &quot;source_frames&quot;: 81,
+    &quot;keep_frames&quot;: 81,
+    &quot;output_fps&quot;: 27.0,
+    &quot;output_duration&quot;: 3.0,
+    &quot;output_relpath&quot;: &quot;static/videos/GenEraser/Light/light_10_processed_street_lamp_control_mask_methods.mp4&quot;,
+    &quot;output_name&quot;: &quot;light_10_processed_street_lamp_control_mask_methods.mp4&quot;
+  },
+  {
+    &quot;category&quot;: &quot;Light&quot;,
+    &quot;source&quot;: &quot;D:\\AAAStudy\\NeurIPS\\主实验\\Transfer (4)\\Transfer\\show_video\\Light\\WILD_ENV001_00013_control_mask_methods_81f_3s.mp4&quot;,
+    &quot;limit_text&quot;: null,
+    &quot;width&quot;: 1920,
+    &quot;height&quot;: 1080,
+    &quot;source_fps&quot;: 27.0,
+    &quot;source_frames&quot;: 81,
+    &quot;keep_frames&quot;: 81,
+    &quot;output_fps&quot;: 27.0,
+    &quot;output_duration&quot;: 3.0,
+    &quot;output_relpath&quot;: &quot;static/videos/GenEraser/Light/light_11_wild_env001_00013_control_mask_methods_81f.mp4&quot;,
+    &quot;output_name&quot;: &quot;light_11_wild_env001_00013_control_mask_methods_81f.mp4&quot;
+  },
+  {
+    &quot;category&quot;: &quot;Light&quot;,
+    &quot;source&quot;: &quot;D:\\AAAStudy\\NeurIPS\\主实验\\Transfer (4)\\Transfer\\show_video\\Light\\WILD_ENV002_00056_control_mask_methods_81f_3s.mp4&quot;,
+    &quot;limit_text&quot;: null,
+    &quot;width&quot;: 1920,
+    &quot;height&quot;: 1080,
+    &quot;source_fps&quot;: 27.0,
+    &quot;source_frames&quot;: 81,
+    &quot;keep_frames&quot;: 81,
+    &quot;output_fps&quot;: 27.0,
+    &quot;output_duration&quot;: 3.0,
+    &quot;output_relpath&quot;: &quot;static/videos/GenEraser/Light/light_12_wild_env002_00056_control_mask_methods_81f.mp4&quot;,
+    &quot;output_name&quot;: &quot;light_12_wild_env002_00056_control_mask_methods_81f.mp4&quot;
+  },
+  {
+    &quot;category&quot;: &quot;Light&quot;,
+    &quot;source&quot;: &quot;D:\\AAAStudy\\NeurIPS\\主实验\\Transfer (4)\\Transfer\\show_video\\Light\\WILD_ENV002_00010_control_mask_methods_81f_3s.mp4&quot;,
+    &quot;limit_text&quot;: null,
+    &quot;width&quot;: 1920,
+    &quot;height&quot;: 1080,
+    &quot;source_fps&quot;: 27.0,
+    &quot;source_frames&quot;: 81,
+    &quot;keep_frames&quot;: 81,
+    &quot;output_fps&quot;: 27.0,
+    &quot;output_duration&quot;: 3.0,
+    &quot;output_relpath&quot;: &quot;static/videos/GenEraser/Light/light_13_wild_env002_00010_control_mask_methods_81f.mp4&quot;,
+    &quot;output_name&quot;: &quot;light_13_wild_env002_00010_control_mask_methods_81f.mp4&quot;
+  },
+  {
+    &quot;category&quot;: &quot;Smoke&quot;,
+    &quot;source&quot;: &quot;D:\\AAAStudy\\NeurIPS\\主实验\\Transfer (4)\\Transfer\\show_video\\Smoke\\processed_7277932-uhd_3840_2160_25fps_control_mask_methods_81f_3s.mp4&quot;,
+    &quot;limit_text&quot;: null,
+    &quot;width&quot;: 1920,
+    &quot;height&quot;: 1080,
+    &quot;source_fps&quot;: 27.0,
+    &quot;source_frames&quot;: 81,
+    &quot;keep_frames&quot;: 81,
+    &quot;output_fps&quot;: 27.0,
+    &quot;output_duration&quot;: 3.0,
+    &quot;output_relpath&quot;: &quot;static/videos/GenEraser/Smoke/smoke_01_processed_7277932_uhd_3840_2160_25fps_cont.mp4&quot;,
+    &quot;output_name&quot;: &quot;smoke_01_processed_7277932_uhd_3840_2160_25fps_cont.mp4&quot;
+  },
+  {
+    &quot;category&quot;: &quot;Smoke&quot;,
+    &quot;source&quot;: &quot;D:\\AAAStudy\\NeurIPS\\主实验\\Transfer (4)\\Transfer\\show_video\\Smoke\\processed_5835662-uhd_3840_2160_25fps_control_mask_methods_81f_3s.mp4&quot;,
+    &quot;limit_text&quot;: null,
+    &quot;width&quot;: 1920,
+    &quot;height&quot;: 1080,
+    &quot;source_fps&quot;: 27.0,
+    &quot;source_frames&quot;: 65,
+    &quot;keep_frames&quot;: 65,
+    &quot;output_fps&quot;: 21.666666666666668,
+    &quot;output_duration&quot;: 3.0,
+    &quot;output_relpath&quot;: &quot;static/videos/GenEraser/Smoke/smoke_02_processed_5835662_uhd_3840_2160_25fps_cont.mp4&quot;,
+    &quot;output_name&quot;: &quot;smoke_02_processed_5835662_uhd_3840_2160_25fps_cont.mp4&quot;
+  },
+  {
+    &quot;category&quot;: &quot;Smoke&quot;,
+    &quot;source&quot;: &quot;D:\\AAAStudy\\NeurIPS\\主实验\\Transfer (4)\\Transfer\\show_video\\Smoke\\processed_20736942-hd_1080_1920_30fps_control_mask_methods_81f_3s.mp4&quot;,
+    &quot;limit_text&quot;: null,
+    &quot;width&quot;: 1920,
+    &quot;height&quot;: 1080,
+    &quot;source_fps&quot;: 27.0,
+    &quot;source_frames&quot;: 81,
+    &quot;keep_frames&quot;: 81,
+    &quot;output_fps&quot;: 27.0,
+    &quot;output_duration&quot;: 3.0,
+    &quot;output_relpath&quot;: &quot;static/videos/GenEraser/Smoke/smoke_03_processed_20736942_hd_1080_1920_30fps_cont.mp4&quot;,
+    &quot;output_name&quot;: &quot;smoke_03_processed_20736942_hd_1080_1920_30fps_cont.mp4&quot;
+  },
+  {
+    &quot;category&quot;: &quot;Smoke&quot;,
+    &quot;source&quot;: &quot;D:\\AAAStudy\\NeurIPS\\主实验\\Transfer (4)\\Transfer\\show_video\\Smoke\\processed_15272023_1080_1920_30fps_control_mask_methods_81f_3s.mp4&quot;,
+    &quot;limit_text&quot;: null,
+    &quot;width&quot;: 1920,
+    &quot;height&quot;: 1080,
+    &quot;source_fps&quot;: 27.0,
+    &quot;source_frames&quot;: 81,
+    &quot;keep_frames&quot;: 81,
+    &quot;output_fps&quot;: 27.0,
+    &quot;output_duration&quot;: 3.0,
+    &quot;output_relpath&quot;: &quot;static/videos/GenEraser/Smoke/smoke_04_processed_15272023_1080_1920_30fps_control.mp4&quot;,
+    &quot;output_name&quot;: &quot;smoke_04_processed_15272023_1080_1920_30fps_control.mp4&quot;
+  },
+  {
+    &quot;category&quot;: &quot;Smoke&quot;,
+    &quot;source&quot;: &quot;D:\\AAAStudy\\NeurIPS\\主实验\\Transfer (4)\\Transfer\\show_video\\Smoke\\15a5062d09de8dc03dc543f99ac053e8_org_control_mask_methods_81f_3s.mp4&quot;,
+    &quot;limit_text&quot;: null,
+    &quot;width&quot;: 1920,
+    &quot;height&quot;: 1080,
+    &quot;source_fps&quot;: 27.0,
+    &quot;source_frames&quot;: 81,
+    &quot;keep_frames&quot;: 81,
+    &quot;output_fps&quot;: 27.0,
+    &quot;output_duration&quot;: 3.0,
+    &quot;output_relpath&quot;: &quot;static/videos/GenEraser/Smoke/smoke_05_15a5062d09de8dc03dc543f99ac053e8_org_contr.mp4&quot;,
+    &quot;output_name&quot;: &quot;smoke_05_15a5062d09de8dc03dc543f99ac053e8_org_contr.mp4&quot;
+  },
+  {
+    &quot;category&quot;: &quot;Smoke&quot;,
+    &quot;source&quot;: &quot;D:\\AAAStudy\\NeurIPS\\主实验\\Transfer (4)\\Transfer\\show_video\\Smoke\\processed_11093331_control_mask_methods_81f_3s.mp4&quot;,
+    &quot;limit_text&quot;: null,
+    &quot;width&quot;: 1920,
+    &quot;height&quot;: 1080,
+    &quot;source_fps&quot;: 27.0,
+    &quot;source_frames&quot;: 81,
+    &quot;keep_frames&quot;: 81,
+    &quot;output_fps&quot;: 27.0,
+    &quot;output_duration&quot;: 3.0,
+    &quot;output_relpath&quot;: &quot;static/videos/GenEraser/Smoke/smoke_06_processed_11093331_control_mask_methods_81.mp4&quot;,
+    &quot;output_name&quot;: &quot;smoke_06_processed_11093331_control_mask_methods_81.mp4&quot;
+  },
+  {
+    &quot;category&quot;: &quot;Smoke&quot;,
+    &quot;source&quot;: &quot;D:\\AAAStudy\\NeurIPS\\主实验\\Transfer (4)\\Transfer\\show_video\\Smoke\\processed_14854556-uhd_3840_2160_30fps_control_mask_methods_81f_3s.mp4&quot;,
+    &quot;limit_text&quot;: &quot;1/3&quot;,
+    &quot;width&quot;: 1920,
+    &quot;height&quot;: 1080,
+    &quot;source_fps&quot;: 27.0,
+    &quot;source_frames&quot;: 33,
+    &quot;keep_frames&quot;: 11,
+    &quot;output_fps&quot;: 3.6666666666666665,
+    &quot;output_duration&quot;: 3.0,
+    &quot;output_relpath&quot;: &quot;static/videos/GenEraser/Smoke/smoke_07_processed_14854556_uhd_3840_2160_30fps_con.mp4&quot;,
+    &quot;output_name&quot;: &quot;smoke_07_processed_14854556_uhd_3840_2160_30fps_con.mp4&quot;
+  },
+  {
+    &quot;category&quot;: &quot;Smoke&quot;,
+    &quot;source&quot;: &quot;D:\\AAAStudy\\NeurIPS\\主实验\\Transfer (4)\\Transfer\\show_video\\Smoke\\processed_14417309_2160_3840_30fps_control_mask_methods_81f_3s.mp4&quot;,
+    &quot;limit_text&quot;: null,
+    &quot;width&quot;: 1920,
+    &quot;height&quot;: 1080,
+    &quot;source_fps&quot;: 27.0,
+    &quot;source_frames&quot;: 81,
+    &quot;keep_frames&quot;: 81,
+    &quot;output_fps&quot;: 27.0,
+    &quot;output_duration&quot;: 3.0,
+    &quot;output_relpath&quot;: &quot;static/videos/GenEraser/Smoke/smoke_08_processed_14417309_2160_3840_30fps_control.mp4&quot;,
+    &quot;output_name&quot;: &quot;smoke_08_processed_14417309_2160_3840_30fps_control.mp4&quot;
+  },
+  {
+    &quot;category&quot;: &quot;Smoke&quot;,
+    &quot;source&quot;: &quot;D:\\AAAStudy\\NeurIPS\\主实验\\Transfer (4)\\Transfer\\show_video\\Smoke\\11721832_control_mask_methods_81f_3s.mp4&quot;,
+    &quot;limit_text&quot;: &quot;1/2&quot;,
+    &quot;width&quot;: 1920,
+    &quot;height&quot;: 1080,
+    &quot;source_fps&quot;: 27.0,
+    &quot;source_frames&quot;: 81,
+    &quot;keep_frames&quot;: 41,
+    &quot;output_fps&quot;: 13.666666666666666,
+    &quot;output_duration&quot;: 3.0,
+    &quot;output_relpath&quot;: &quot;static/videos/GenEraser/Smoke/smoke_09_11721832_control_mask_methods_81f_3s.mp4&quot;,
+    &quot;output_name&quot;: &quot;smoke_09_11721832_control_mask_methods_81f_3s.mp4&quot;
+  },
+  {
+    &quot;category&quot;: &quot;Smoke&quot;,
+    &quot;source&quot;: &quot;D:\\AAAStudy\\NeurIPS\\主实验\\Transfer (4)\\Transfer\\show_video\\Smoke\\WILD_ENV001_00080_control_mask_methods_81f_3s.mp4&quot;,
+    &quot;limit_text&quot;: null,
+    &quot;width&quot;: 1920,
+    &quot;height&quot;: 1080,
+    &quot;source_fps&quot;: 27.0,
+    &quot;source_frames&quot;: 81,
+    &quot;keep_frames&quot;: 81,
+    &quot;output_fps&quot;: 27.0,
+    &quot;output_duration&quot;: 3.0,
+    &quot;output_relpath&quot;: &quot;static/videos/GenEraser/Smoke/smoke_10_wild_env001_00080_control_mask_methods_81f.mp4&quot;,
+    &quot;output_name&quot;: &quot;smoke_10_wild_env001_00080_control_mask_methods_81f.mp4&quot;
+  },
+  {
+    &quot;category&quot;: &quot;Mirror&quot;,
+    &quot;source&quot;: &quot;D:\\AAAStudy\\NeurIPS\\主实验\\Transfer (4)\\Transfer\\show_video\\Mirror\\WILD_ENV002_00042_control_mask_methods_81f_3s.mp4&quot;,
+    &quot;limit_text&quot;: null,
+    &quot;width&quot;: 1920,
+    &quot;height&quot;: 1080,
+    &quot;source_fps&quot;: 27.0,
+    &quot;source_frames&quot;: 81,
+    &quot;keep_frames&quot;: 81,
+    &quot;output_fps&quot;: 27.0,
+    &quot;output_duration&quot;: 3.0,
+    &quot;output_relpath&quot;: &quot;static/videos/GenEraser/Mirror/mirror_01_wild_env002_00042_control_mask_methods_81f.mp4&quot;,
+    &quot;output_name&quot;: &quot;mirror_01_wild_env002_00042_control_mask_methods_81f.mp4&quot;
+  },
+  {
+    &quot;category&quot;: &quot;Mirror&quot;,
+    &quot;source&quot;: &quot;D:\\AAAStudy\\NeurIPS\\主实验\\Transfer (4)\\Transfer\\show_video\\Mirror\\WILD_ENV002_00063_control_mask_methods_81f_3s.mp4&quot;,
+    &quot;limit_text&quot;: null,
+    &quot;width&quot;: 1920,
+    &quot;height&quot;: 1080,
+    &quot;source_fps&quot;: 27.0,
+    &quot;source_frames&quot;: 81,
+    &quot;keep_frames&quot;: 81,
+    &quot;output_fps&quot;: 27.0,
+    &quot;output_duration&quot;: 3.0,
+    &quot;output_relpath&quot;: &quot;static/videos/GenEraser/Mirror/mirror_02_wild_env002_00063_control_mask_methods_81f.mp4&quot;,
+    &quot;output_name&quot;: &quot;mirror_02_wild_env002_00063_control_mask_methods_81f.mp4&quot;
+  },
+  {
+    &quot;category&quot;: &quot;Mirror&quot;,
+    &quot;source&quot;: &quot;D:\\AAAStudy\\NeurIPS\\主实验\\Transfer (4)\\Transfer\\show_video\\Mirror\\WILD_ENV002_00099_control_mask_methods_81f_3s.mp4&quot;,
+    &quot;limit_text&quot;: null,
+    &quot;width&quot;: 1920,
+    &quot;height&quot;: 1080,
+    &quot;source_fps&quot;: 27.0,
+    &quot;source_frames&quot;: 81,
+    &quot;keep_frames&quot;: 81,
+    &quot;output_fps&quot;: 27.0,
+    &quot;output_duration&quot;: 3.0,
+    &quot;output_relpath&quot;: &quot;static/videos/GenEraser/Mirror/mirror_03_wild_env002_00099_control_mask_methods_81f.mp4&quot;,
+    &quot;output_name&quot;: &quot;mirror_03_wild_env002_00099_control_mask_methods_81f.mp4&quot;
+  },
+  {
+    &quot;category&quot;: &quot;Mirror&quot;,
+    &quot;source&quot;: &quot;D:\\AAAStudy\\NeurIPS\\主实验\\Transfer (4)\\Transfer\\show_video\\Mirror\\processed_6277922-uhd_3840_2160_25fps_control_mask_methods_81f_3s.mp4&quot;,
+    &quot;limit_text&quot;: null,
+    &quot;width&quot;: 1920,
+    &quot;height&quot;: 1080,
+    &quot;source_fps&quot;: 27.0,
+    &quot;source_frames&quot;: 49,
+    &quot;keep_frames&quot;: 49,
+    &quot;output_fps&quot;: 16.333333333333332,
+    &quot;output_duration&quot;: 3.0,
+    &quot;output_relpath&quot;: &quot;static/videos/GenEraser/Mirror/mirror_04_processed_6277922_uhd_3840_2160_25fps_cont.mp4&quot;,
+    &quot;output_name&quot;: &quot;mirror_04_processed_6277922_uhd_3840_2160_25fps_cont.mp4&quot;
+  },
+  {
+    &quot;category&quot;: &quot;Mirror&quot;,
+    &quot;source&quot;: &quot;D:\\AAAStudy\\NeurIPS\\主实验\\Transfer (4)\\Transfer\\show_video\\Mirror\\processed_7315681-hd_1920_1080_25fps_control_mask_methods_81f_3s.mp4&quot;,
+    &quot;limit_text&quot;: null,
+    &quot;width&quot;: 1920,
+    &quot;height&quot;: 1080,
+    &quot;source_fps&quot;: 27.0,
+    &quot;source_frames&quot;: 81,
+    &quot;keep_frames&quot;: 81,
+    &quot;output_fps&quot;: 27.0,
+    &quot;output_duration&quot;: 3.0,
+    &quot;output_relpath&quot;: &quot;static/videos/GenEraser/Mirror/mirror_05_processed_7315681_hd_1920_1080_25fps_contr.mp4&quot;,
+    &quot;output_name&quot;: &quot;mirror_05_processed_7315681_hd_1920_1080_25fps_contr.mp4&quot;
+  },
+  {
+    &quot;category&quot;: &quot;Mirror&quot;,
+    &quot;source&quot;: &quot;D:\\AAAStudy\\NeurIPS\\主实验\\Transfer (4)\\Transfer\\show_video\\Mirror\\WILD_ENV001_00058_control_mask_methods_81f_3s.mp4&quot;,
+    &quot;limit_text&quot;: null,
+    &quot;width&quot;: 1920,
+    &quot;height&quot;: 1080,
+    &quot;source_fps&quot;: 27.0,
+    &quot;source_frames&quot;: 81,
+    &quot;keep_frames&quot;: 81,
+    &quot;output_fps&quot;: 27.0,
+    &quot;output_duration&quot;: 3.0,
+    &quot;output_relpath&quot;: &quot;static/videos/GenEraser/Mirror/mirror_06_wild_env001_00058_control_mask_methods_81f.mp4&quot;,
+    &quot;output_name&quot;: &quot;mirror_06_wild_env001_00058_control_mask_methods_81f.mp4&quot;
+  },
+  {
+    &quot;category&quot;: &quot;Shadow&quot;,
+    &quot;source&quot;: &quot;D:\\AAAStudy\\NeurIPS\\主实验\\Transfer (4)\\Transfer\\show_video\\Shadow\\WILD_ENV001_00050_control_mask_methods_81f_3s.mp4&quot;,
+    &quot;limit_text&quot;: null,
+    &quot;width&quot;: 1920,
+    &quot;height&quot;: 1080,
+    &quot;source_fps&quot;: 27.0,
+    &quot;source_frames&quot;: 81,
+    &quot;keep_frames&quot;: 81,
+    &quot;output_fps&quot;: 27.0,
+    &quot;output_duration&quot;: 3.0,
+    &quot;output_relpath&quot;: &quot;static/videos/GenEraser/Shadow/shadow_01_wild_env001_00050_control_mask_methods_81f.mp4&quot;,
+    &quot;output_name&quot;: &quot;shadow_01_wild_env001_00050_control_mask_methods_81f.mp4&quot;
+  },
+  {
+    &quot;category&quot;: &quot;Shadow&quot;,
+    &quot;source&quot;: &quot;D:\\AAAStudy\\NeurIPS\\主实验\\Transfer (4)\\Transfer\\show_video\\Shadow\\WILD_ENV001_00053_control_mask_methods_81f_3s.mp4&quot;,
+    &quot;limit_text&quot;: null,
+    &quot;width&quot;: 1920,
+    &quot;height&quot;: 1080,
+    &quot;source_fps&quot;: 27.0,
+    &quot;source_frames&quot;: 81,
+    &quot;keep_frames&quot;: 81,
+    &quot;output_fps&quot;: 27.0,
+    &quot;output_duration&quot;: 3.0,
+    &quot;output_relpath&quot;: &quot;static/videos/GenEraser/Shadow/shadow_02_wild_env001_00053_control_mask_methods_81f.mp4&quot;,
+    &quot;output_name&quot;: &quot;shadow_02_wild_env001_00053_control_mask_methods_81f.mp4&quot;
+  },
+  {
+    &quot;category&quot;: &quot;Shadow&quot;,
+    &quot;source&quot;: &quot;D:\\AAAStudy\\NeurIPS\\主实验\\Transfer (4)\\Transfer\\show_video\\Shadow\\WILD_ENV001_00078_control_mask_methods_81f_3s.mp4&quot;,
+    &quot;limit_text&quot;: null,
+    &quot;width&quot;: 1920,
+    &quot;height&quot;: 1080,
+    &quot;source_fps&quot;: 27.0,
+    &quot;source_frames&quot;: 81,
+    &quot;keep_frames&quot;: 81,
+    &quot;output_fps&quot;: 27.0,
+    &quot;output_duration&quot;: 3.0,
+    &quot;output_relpath&quot;: &quot;static/videos/GenEraser/Shadow/shadow_03_wild_env001_00078_control_mask_methods_81f.mp4&quot;,
+    &quot;output_name&quot;: &quot;shadow_03_wild_env001_00078_control_mask_methods_81f.mp4&quot;
+  },
+  {
+    &quot;category&quot;: &quot;Shadow&quot;,
+    &quot;source&quot;: &quot;D:\\AAAStudy\\NeurIPS\\主实验\\Transfer (4)\\Transfer\\show_video\\Shadow\\WILD_ENV002_00002_control_mask_methods_81f_3s.mp4&quot;,
+    &quot;limit_text&quot;: null,
+    &quot;width&quot;: 1920,
+    &quot;height&quot;: 1080,
+    &quot;source_fps&quot;: 27.0,
+    &quot;source_frames&quot;: 81,
+    &quot;keep_frames&quot;: 81,
+    &quot;output_fps&quot;: 27.0,
+    &quot;output_duration&quot;: 3.0,
+    &quot;output_relpath&quot;: &quot;static/videos/GenEraser/Shadow/shadow_04_wild_env002_00002_control_mask_methods_81f.mp4&quot;,
+    &quot;output_name&quot;: &quot;shadow_04_wild_env002_00002_control_mask_methods_81f.mp4&quot;
+  },
+  {
+    &quot;category&quot;: &quot;Shadow&quot;,
+    &quot;source&quot;: &quot;D:\\AAAStudy\\NeurIPS\\主实验\\Transfer (4)\\Transfer\\show_video\\Shadow\\WILD_ENV002_00037_control_mask_methods_81f_3s.mp4&quot;,
+    &quot;limit_text&quot;: null,
+    &quot;width&quot;: 1920,
+    &quot;height&quot;: 1080,
+    &quot;source_fps&quot;: 27.0,
+    &quot;source_frames&quot;: 81,
+    &quot;keep_frames&quot;: 81,
+    &quot;output_fps&quot;: 27.0,
+    &quot;output_duration&quot;: 3.0,
+    &quot;output_relpath&quot;: &quot;static/videos/GenEraser/Shadow/shadow_05_wild_env002_00037_control_mask_methods_81f.mp4&quot;,
+    &quot;output_name&quot;: &quot;shadow_05_wild_env002_00037_control_mask_methods_81f.mp4&quot;
+  },
+  {
+    &quot;category&quot;: &quot;Shadow&quot;,
+    &quot;source&quot;: &quot;D:\\AAAStudy\\NeurIPS\\主实验\\Transfer (4)\\Transfer\\show_video\\Shadow\\WILD_ENV002_00046_control_mask_methods_81f_3s.mp4&quot;,
+    &quot;limit_text&quot;: null,
+    &quot;width&quot;: 1920,
+    &quot;height&quot;: 1080,
+    &quot;source_fps&quot;: 27.0,
+    &quot;source_frames&quot;: 81,
+    &quot;keep_frames&quot;: 81,
+    &quot;output_fps&quot;: 27.0,
+    &quot;output_duration&quot;: 3.0,
+    &quot;output_relpath&quot;: &quot;static/videos/GenEraser/Shadow/shadow_06_wild_env002_00046_control_mask_methods_81f.mp4&quot;,
+    &quot;output_name&quot;: &quot;shadow_06_wild_env002_00046_control_mask_methods_81f.mp4&quot;
+  },
+  {
+    &quot;category&quot;: &quot;Shadow&quot;,
+    &quot;source&quot;: &quot;D:\\AAAStudy\\NeurIPS\\主实验\\Transfer (4)\\Transfer\\show_video\\Shadow\\WILD_ENV002_00079_control_mask_methods_81f_3s.mp4&quot;,
+    &quot;limit_text&quot;: null,
+    &quot;width&quot;: 1920,
+    &quot;height&quot;: 1080,
+    &quot;source_fps&quot;: 27.0,
+    &quot;source_frames&quot;: 81,
+    &quot;keep_frames&quot;: 81,
+    &quot;output_fps&quot;: 27.0,
+    &quot;output_duration&quot;: 3.0,
+    &quot;output_relpath&quot;: &quot;static/videos/GenEraser/Shadow/shadow_07_wild_env002_00079_control_mask_methods_81f.mp4&quot;,
+    &quot;output_name&quot;: &quot;shadow_07_wild_env002_00079_control_mask_methods_81f.mp4&quot;
+  }
+]</script>
+</body>
+</html>
