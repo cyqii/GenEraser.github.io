@@ -2,166 +2,308 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
+  <meta name="description" content="GenEraser: Generalizable Video Object Removal via Balanced Text-Mask Guidance and Decoupled Locator-Preserver">
+  <meta name="keywords" content="GenEraser, video object removal, video editing">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>GenEraser: Generalizable Video Object Removal</title>
-  <meta name="description" content="GenEraser project page with video object removal examples grouped by removable effect category.">
+  <title>GenEraser</title>
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
   <style>
     :root {
-      color-scheme: dark;
-      --bg: #0a0d0f;
-      --surface: #15191d;
-      --surface-2: #1d2328;
-      --line: rgba(255,255,255,.14);
-      --text: #f4f6f8;
-      --muted: #b8c0c7;
-      --teal: #4bd4c8;
-      --gold: #e9bf62;
-      --red: #e86d67;
+      color-scheme: light;
+      --text: #202124;
+      --muted: #5f6368;
+      --line: #e5e7eb;
+      --soft: #f5f5f7;
+      --soft-blue: #eef5ff;
+      --blue: #3b82f6;
+      --purple: #8b5cf6;
+      --dark: #1f2937;
+      --radius: 10px;
+      --page: min(1040px, calc(100% - 32px));
+      --wide: min(1180px, calc(100% - 32px));
     }
 
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
 
-    html { scroll-behavior: smooth; }
+    html {
+      scroll-behavior: smooth;
+    }
 
     body {
       margin: 0;
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: var(--bg);
       color: var(--text);
-      line-height: 1.5;
+      background: #fff;
+      font-family: "Noto Sans", Arial, sans-serif;
+      line-height: 1.55;
+    }
+
+    a {
+      color: var(--blue);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
     }
 
     button,
-    a { font: inherit; }
+    a {
+      font: inherit;
+    }
 
     .hero {
-      min-height: 64vh;
-      display: grid;
-      align-items: center;
-      padding: 92px 6vw 56px;
-      background:
-        linear-gradient(135deg, rgba(75,212,200,.20), transparent 38%),
-        linear-gradient(180deg, #20262b 0%, var(--bg) 86%);
-      border-bottom: 1px solid var(--line);
+      padding: 58px 16px 28px;
     }
 
-    .hero-inner {
-      width: min(1160px, 100%);
+    .hero-body {
+      width: var(--page);
+      margin: 0 auto;
+      text-align: center;
     }
 
-    .eyebrow {
-      margin: 0 0 18px;
-      color: var(--teal);
-      font-size: 14px;
-      font-weight: 800;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-    }
-
-    h1 {
-      max-width: 1120px;
+    .project-title {
       margin: 0;
-      font-size: clamp(38px, 5.5vw, 74px);
-      line-height: 1.05;
+      font-family: "Google Sans", "Noto Sans", sans-serif;
+      font-size: clamp(48px, 8vw, 86px);
+      line-height: 1;
+      font-weight: 800;
+      letter-spacing: 0;
+      background: linear-gradient(to right, var(--blue), var(--purple));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .project-subtitle {
+      margin: 16px auto 0;
+      max-width: 930px;
+      font-family: "Google Sans", "Noto Sans", sans-serif;
+      font-size: clamp(27px, 4vw, 44px);
+      line-height: 1.16;
+      font-weight: 700;
       letter-spacing: 0;
     }
 
-    .subtitle {
-      max-width: 900px;
-      margin: 24px 0 0;
+    .venue {
+      margin: 18px 0 0;
       color: var(--muted);
+      font-family: "Google Sans", "Noto Sans", sans-serif;
+      font-size: clamp(21px, 3vw, 30px);
+      font-weight: 700;
+    }
+
+    .authors,
+    .affiliations,
+    .notes {
+      margin: 18px auto 0;
+      max-width: 960px;
+      font-family: "Google Sans", "Noto Sans", sans-serif;
       font-size: 20px;
     }
 
-    .nav {
-      position: sticky;
-      top: 0;
-      z-index: 10;
+    .affiliations,
+    .notes {
+      margin-top: 7px;
+      color: var(--muted);
+      font-size: 18px;
+    }
+
+    .author-block {
+      display: inline-block;
+      margin: 0 10px 6px;
+    }
+
+    .publication-links {
       display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
       gap: 10px;
-      overflow-x: auto;
-      padding: 14px 6vw;
-      background: rgba(10,13,15,.90);
-      backdrop-filter: blur(14px);
-      border-bottom: 1px solid var(--line);
+      margin: 24px auto 0;
     }
 
-    .nav a {
-      white-space: nowrap;
+    .paper-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 38px;
+      padding: 8px 17px;
+      border-radius: 999px;
+      color: #fff;
+      background: var(--dark);
+      font-weight: 700;
+    }
+
+    .paper-button:hover {
+      color: #fff;
       text-decoration: none;
-      color: var(--text);
-      border: 1px solid var(--line);
-      background: var(--surface);
-      padding: 9px 14px;
-      font-weight: 800;
+      background: #111827;
     }
 
-    .nav a:hover,
-    .nav a:focus-visible {
-      border-color: var(--teal);
-      outline: none;
-    }
-
-    main { padding: 54px 0 92px; }
-
-    .category {
-      width: min(1240px, 88vw);
-      margin: 0 auto 74px;
-    }
-
-    .category-head {
+    .anchor-row {
+      width: var(--wide);
+      margin: 18px auto 0;
       display: flex;
-      align-items: end;
-      justify-content: space-between;
-      gap: 24px;
-      margin-bottom: 18px;
-      border-bottom: 1px solid var(--line);
-      padding-bottom: 16px;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      padding: 0 0 8px;
     }
 
-    .category-kicker {
-      margin: 0 0 6px;
-      color: var(--teal);
-      font-size: 13px;
+    .anchor-row a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 34px;
+      padding: 7px 13px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--text);
+      background: #fff;
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .anchor-row a:hover {
+      border-color: #bfd7ff;
+      background: var(--soft-blue);
+      text-decoration: none;
+    }
+
+    .section {
+      padding: 36px 16px;
+    }
+
+    .section.is-light {
+      background: var(--soft);
+    }
+
+    .container {
+      width: var(--page);
+      margin: 0 auto;
+    }
+
+    .wide-container {
+      width: var(--wide);
+      margin: 0 auto;
+    }
+
+    .section-title {
+      margin: 0 0 18px;
+      text-align: center;
+      font-family: "Google Sans", "Noto Sans", sans-serif;
+      font-size: 30px;
+      line-height: 1.18;
       font-weight: 800;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-    }
-
-    .category h2 {
-      margin: 0;
-      font-size: clamp(32px, 4vw, 56px);
-      line-height: 1;
       letter-spacing: 0;
     }
 
-    .counter {
+    .lead {
+      margin: 0 auto;
+      max-width: 900px;
+      text-align: center;
       color: var(--muted);
+      font-size: 18px;
+    }
+
+    .news-list {
+      width: min(760px, 100%);
+      margin: 0 auto;
+      border-top: 1px solid var(--line);
+    }
+
+    .news-item {
+      display: grid;
+      grid-template-columns: 132px 1fr;
+      gap: 18px;
+      padding: 13px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .news-date {
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .task-nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 9px;
+      margin: 26px auto 0;
+    }
+
+    .task-nav a {
+      display: inline-flex;
+      padding: 8px 14px;
+      border-radius: 999px;
+      color: var(--text);
+      background: #fff;
+      border: 1px solid var(--line);
+      font-weight: 700;
+    }
+
+    .task-nav a:hover {
+      background: var(--soft-blue);
+      border-color: #bfd7ff;
+      text-decoration: none;
+    }
+
+    .demo-section {
+      padding: 42px 16px;
+    }
+
+    .demo-section:nth-child(even) {
+      background: var(--soft);
+    }
+
+    .demo-header {
+      width: var(--page);
+      margin: 0 auto 22px;
+      text-align: center;
+    }
+
+    .demo-title {
+      margin: 0;
+      font-family: "Google Sans", "Noto Sans", sans-serif;
+      font-size: 28px;
+      line-height: 1.2;
       font-weight: 800;
-      white-space: nowrap;
+      letter-spacing: 0;
+    }
+
+    .demo-text {
+      margin: 8px auto 0;
+      max-width: 860px;
+      color: var(--muted);
     }
 
     .carousel {
-      border: 1px solid var(--line);
-      background: var(--surface);
-      overflow: hidden;
+      width: min(1000px, 100%);
+      margin: 0 auto;
     }
 
-    .stage {
-      position: relative;
-      min-height: 280px;
+    .video-panel {
+      overflow: hidden;
+      border: 1px solid #d7dbe2;
+      border-radius: var(--radius);
+      background: #000;
+      box-shadow: 0 14px 36px rgba(15, 23, 42, .08);
+    }
+
+    .video-stage {
       display: flex;
       align-items: center;
       justify-content: center;
+      min-height: 260px;
       background: #000;
     }
 
-    .stage video {
+    .video-stage video {
       display: block;
-      width: auto;
+      width: 100%;
       height: auto;
-      max-width: 100%;
-      max-height: 72vh;
       background: #000;
     }
 
@@ -170,35 +312,36 @@
       grid-template-columns: auto 1fr auto;
       align-items: center;
       gap: 14px;
-      padding: 14px;
-      background: var(--surface-2);
+      padding: 12px;
+      background: #fff;
       border-top: 1px solid var(--line);
     }
 
     .carousel-button {
-      min-width: 88px;
+      min-width: 86px;
+      min-height: 36px;
       border: 1px solid var(--line);
+      border-radius: 999px;
+      background: #fff;
       color: var(--text);
-      background: #0f1215;
-      padding: 10px 14px;
       cursor: pointer;
-      font-weight: 800;
+      font-weight: 700;
     }
 
     .carousel-button:hover,
     .carousel-button:focus-visible {
-      border-color: var(--teal);
+      border-color: #bfd7ff;
+      background: var(--soft-blue);
       outline: none;
     }
 
     .dots {
+      min-width: 0;
       display: flex;
       justify-content: center;
-      align-items: center;
       gap: 8px;
-      min-width: 0;
       overflow-x: auto;
-      padding: 3px 0;
+      padding: 4px 0;
       scrollbar-width: thin;
     }
 
@@ -206,46 +349,77 @@
       width: 10px;
       height: 10px;
       flex: 0 0 10px;
-      border: 1px solid rgba(255,255,255,.55);
+      border: 1px solid #aeb7c2;
       border-radius: 999px;
-      padding: 0;
-      background: transparent;
+      background: #fff;
       cursor: pointer;
+      padding: 0;
     }
 
     .dot[aria-current="true"] {
-      background: var(--gold);
-      border-color: var(--gold);
+      background: var(--blue);
+      border-color: var(--blue);
+    }
+
+    .slide-counter {
+      margin: 10px 0 0;
+      text-align: center;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .text-block {
+      color: #333;
+      font-size: 17px;
+      text-align: justify;
+    }
+
+    .placeholder-figure {
+      min-height: 220px;
+      display: grid;
+      place-items: center;
+      margin: 14px auto 18px;
+      border: 1px dashed #b7c2d0;
+      border-radius: var(--radius);
+      background: #fff;
+      color: var(--muted);
+      font-weight: 700;
+      text-align: center;
+      padding: 24px;
+    }
+
+    pre {
+      margin: 0;
+      padding: 18px;
+      overflow-x: auto;
+      border-radius: var(--radius);
+      background: #f2f4f7;
+      color: #111827;
+      font-size: 14px;
     }
 
     footer {
-      width: min(1240px, 88vw);
-      margin: 0 auto;
+      padding: 34px 16px 48px;
       color: var(--muted);
-      border-top: 1px solid var(--line);
-      padding-top: 22px;
+      text-align: center;
+      font-size: 14px;
     }
 
-    @media (max-width: 760px) {
+    @media (max-width: 720px) {
       .hero {
-        min-height: 56vh;
-        padding-top: 72px;
+        padding-top: 42px;
       }
 
-      .subtitle { font-size: 18px; }
-
-      .category {
-        width: min(100% - 28px, 1240px);
-        margin-bottom: 54px;
+      .authors,
+      .affiliations,
+      .notes {
+        font-size: 16px;
       }
 
-      .category-head {
-        display: block;
-      }
-
-      .counter {
-        display: block;
-        margin-top: 10px;
+      .news-item {
+        grid-template-columns: 1fr;
+        gap: 4px;
       }
 
       .carousel-tools {
@@ -265,20 +439,126 @@
   </style>
 </head>
 <body>
-  <header class="hero">
-    <div class="hero-inner">
-      <p class="eyebrow">Generalizable Video Object Removal</p>
-      <h1>GenEraser: Generalizable Video Object Removal via Balanced Text-Mask Guidance and Decoupled Locator-Preserver</h1>
-      <p class="subtitle">GenEraser removes visual effects including deformation, reflection, lighting, smoke, mirror artifacts, and shadow.</p>
+  <section class="hero">
+    <div class="hero-body">
+      <h1 class="project-title">GenEraser</h1>
+      <h2 class="project-subtitle">Generalizable Video Object Removal via Balanced Text-Mask Guidance and Decoupled Locator-Preserver</h2>
+      <div class="venue">TODO: Conference / Journal / Workshop</div>
+
+      <div class="authors">
+        <span class="author-block">TODO: Author One<sup>1</sup></span>
+        <span class="author-block">TODO: Author Two<sup>1</sup></span>
+        <span class="author-block">TODO: Author Three<sup>2</sup></span>
+        <span class="author-block">TODO: Author Four<sup>2</sup></span>
+      </div>
+      <div class="affiliations">
+        <span><sup>1</sup>TODO: Affiliation One</span>
+        <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+        <span><sup>2</sup>TODO: Affiliation Two</span>
+      </div>
+      <div class="notes">TODO: Corresponding authors / project lead notes.</div>
+
+      <div class="publication-links" aria-label="Project links">
+        <a class="paper-button" href="#" target="_blank" rel="noopener">arXiv</a>
+        <a class="paper-button" href="#" target="_blank" rel="noopener">PDF</a>
+        <a class="paper-button" href="https://github.com/cyqii/GenEraser.github.io" target="_blank" rel="noopener">Code</a>
+        <a class="paper-button" href="#" target="_blank" rel="noopener">Dataset</a>
+        <a class="paper-button" href="#" target="_blank" rel="noopener">Video</a>
+      </div>
     </div>
-  </header>
+  </section>
 
-  <nav class="nav" aria-label="Effect categories" id="category-nav"></nav>
+  <nav class="anchor-row" aria-label="Page navigation">
+    <a href="#news">News</a>
+    <a href="#tldr">TL; DR</a>
+    <a href="#deformation">Deformation</a>
+    <a href="#reflection">Reflection</a>
+    <a href="#light">Light</a>
+    <a href="#smoke">Smoke</a>
+    <a href="#mirror">Mirror</a>
+    <a href="#shadow">Shadow</a>
+    <a href="#abstract">Abstract</a>
+    <a href="#method">Method</a>
+    <a href="#bibtex">BibTeX</a>
+  </nav>
 
-  <main id="gallery"></main>
+  <section id="news" class="section">
+    <div class="container">
+      <h2 class="section-title">News</h2>
+      <div class="news-list">
+        <div class="news-item">
+          <div class="news-date">TODO: Date</div>
+          <div>TODO: Add paper acceptance, code release, or project update.</div>
+        </div>
+        <div class="news-item">
+          <div class="news-date">TODO: Date</div>
+          <div>TODO: Add another project update.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="tldr" class="section is-light">
+    <div class="container">
+      <h2 class="section-title">TL; DR</h2>
+      <p class="lead">GenEraser removes unwanted visual effects and objects from videos across deformation, reflection, lighting, smoke, mirror, and shadow categories. TODO: Replace this sentence with the final one-line contribution summary.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wide-container">
+      <h2 class="section-title">Video Object Removal Results</h2>
+      <p class="lead">The examples below are grouped by effect category. Each category presents one result at a time and can be browsed with the controls or mouse wheel.</p>
+      <div class="task-nav" id="task-nav" aria-label="Result categories"></div>
+    </div>
+  </section>
+
+  <main id="gallery" aria-label="GenEraser video gallery"></main>
+
+  <section id="abstract" class="section is-light">
+    <div class="container">
+      <h2 class="section-title">Abstract</h2>
+      <p class="text-block">TODO: Paste the final abstract here. This placeholder should briefly explain the problem of generalizable video object removal, the proposed balanced text-mask guidance, the decoupled locator-preserver design, and the main experimental findings.</p>
+    </div>
+  </section>
+
+  <section id="method" class="section">
+    <div class="container">
+      <h2 class="section-title">Method</h2>
+      <div class="placeholder-figure">TODO: Insert method overview figure.</div>
+      <p class="text-block">TODO: Describe the GenEraser pipeline, including balanced text-mask guidance and the decoupled locator-preserver. Replace this paragraph after the final method figure and explanation are ready.</p>
+    </div>
+  </section>
+
+  <section id="runtime" class="section is-light">
+    <div class="container">
+      <h2 class="section-title">Runtime Comparison</h2>
+      <div class="placeholder-figure">TODO: Insert runtime or quantitative comparison figure.</div>
+      <p class="text-block">TODO: Add comparison details, metrics, and experiment settings.</p>
+    </div>
+  </section>
+
+  <section id="bibtex" class="section">
+    <div class="container">
+      <h2 class="section-title">BibTeX</h2>
+      <pre><code>@article{todo2026generaser,
+  title   = {GenEraser: Generalizable Video Object Removal via Balanced Text-Mask Guidance and Decoupled Locator-Preserver},
+  author  = {TODO},
+  journal = {TODO},
+  year    = {2026}
+}</code></pre>
+    </div>
+  </section>
+
+  <section id="acknowledgements" class="section is-light">
+    <div class="container">
+      <h2 class="section-title">Acknowledgements</h2>
+      <p class="lead">TODO: Add acknowledgements and template credits.</p>
+    </div>
+  </section>
 
   <footer>
-    <p>GenEraser project page examples are grouped by removable effect category.</p>
+    <p>This website layout is adapted for GenEraser with a NeoVerse-style academic project page structure.</p>
   </footer>
 
   <script>
@@ -286,6 +566,7 @@
       {
         name: "Deformation",
         id: "deformation",
+        summary: "TODO: Briefly describe deformation removal examples.",
         videos: [
           "./static/videos/GenEraser/Deformation/01.mp4",
           "./static/videos/GenEraser/Deformation/02.mp4",
@@ -306,6 +587,7 @@
       {
         name: "Reflection",
         id: "reflection",
+        summary: "TODO: Briefly describe reflection removal examples.",
         videos: [
           "./static/videos/GenEraser/Reflection/01.mp4",
           "./static/videos/GenEraser/Reflection/02.mp4",
@@ -319,6 +601,7 @@
       {
         name: "Light",
         id: "light",
+        summary: "TODO: Briefly describe lighting-effect removal examples.",
         videos: [
           "./static/videos/GenEraser/Light/01.mp4",
           "./static/videos/GenEraser/Light/02.mp4",
@@ -338,6 +621,7 @@
       {
         name: "Smoke",
         id: "smoke",
+        summary: "TODO: Briefly describe smoke removal examples.",
         videos: [
           "./static/videos/GenEraser/Smoke/01.mp4",
           "./static/videos/GenEraser/Smoke/02.mp4",
@@ -354,6 +638,7 @@
       {
         name: "Mirror",
         id: "mirror",
+        summary: "TODO: Briefly describe mirror-artifact removal examples.",
         videos: [
           "./static/videos/GenEraser/Mirror/01.mp4",
           "./static/videos/GenEraser/Mirror/02.mp4",
@@ -366,6 +651,7 @@
       {
         name: "Shadow",
         id: "shadow",
+        summary: "TODO: Briefly describe shadow removal examples.",
         videos: [
           "./static/videos/GenEraser/Shadow/01.mp4",
           "./static/videos/GenEraser/Shadow/02.mp4",
@@ -378,41 +664,40 @@
       }
     ];
 
-    const nav = document.querySelector("#category-nav");
+    const taskNav = document.querySelector("#task-nav");
     const gallery = document.querySelector("#gallery");
 
     galleryData.forEach((category) => {
       const link = document.createElement("a");
       link.href = `#${category.id}`;
       link.textContent = category.name;
-      nav.appendChild(link);
+      taskNav.appendChild(link);
 
       const section = document.createElement("section");
-      section.className = "category";
+      section.className = "demo-section";
       section.id = category.id;
       section.innerHTML = `
-        <div class="category-head">
-          <div>
-            <p class="category-kicker">Effect Category</p>
-            <h2>${category.name}</h2>
-          </div>
-          <span class="counter" aria-live="polite"></span>
+        <div class="demo-header">
+          <h2 class="demo-title">${category.name}</h2>
+          <p class="demo-text">${category.summary}</p>
         </div>
         <div class="carousel" data-index="0">
-          <div class="stage">
-            <video controls muted loop playsinline preload="metadata">
-              <source src="${category.videos[0]}" type="video/mp4">
-            </video>
+          <div class="video-panel">
+            <div class="video-stage">
+              <video controls muted loop playsinline preload="metadata">
+                <source src="${category.videos[0]}" type="video/mp4">
+              </video>
+            </div>
+            <div class="carousel-tools">
+              <button class="carousel-button prev" type="button">Prev</button>
+              <div class="dots" role="tablist" aria-label="${category.name} examples"></div>
+              <button class="carousel-button next" type="button">Next</button>
+            </div>
           </div>
-          <div class="carousel-tools">
-            <button class="carousel-button prev" type="button">Prev</button>
-            <div class="dots" role="tablist" aria-label="${category.name} examples"></div>
-            <button class="carousel-button next" type="button">Next</button>
-          </div>
+          <p class="slide-counter" aria-live="polite"></p>
         </div>
       `;
       gallery.appendChild(section);
-
       setupCarousel(section, category);
     });
 
@@ -420,7 +705,7 @@
       const carousel = section.querySelector(".carousel");
       const video = section.querySelector("video");
       const source = section.querySelector("source");
-      const counter = section.querySelector(".counter");
+      const counter = section.querySelector(".slide-counter");
       const dots = section.querySelector(".dots");
       const prev = section.querySelector(".prev");
       const next = section.querySelector(".next");
@@ -443,7 +728,7 @@
         source.src = category.videos[index];
         video.load();
         video.play().catch(() => {});
-        counter.textContent = `${index + 1} / ${category.videos.length}`;
+        counter.textContent = `${category.name} example ${index + 1} / ${category.videos.length}`;
         dots.querySelectorAll(".dot").forEach((dot, dotIndex) => {
           dot.setAttribute("aria-current", dotIndex === index ? "true" : "false");
         });
