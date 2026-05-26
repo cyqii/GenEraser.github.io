@@ -449,7 +449,7 @@
         <span class="author-block">Lin Liu*<sup>2</sup></span>
         <span class="author-block">Haisu Wu<sup>4</sup></span>
         <span class="author-block">Xiaopeng Zhang<sup>2</sup></span>
-        <span class="author-block">Yaowei Wang<sup>3,4</sup></span>
+        <span class="author-block">Yaowei Wang<sup>3,5</sup></span>
         <span class="author-block">Yujiu Yang*<sup>1</sup></span>
         <span class="author-block">Qi Tian<sup>2</sup></span>
       </div>
@@ -532,7 +532,7 @@ Extensive experiments demonstrate that our GenEraser surpasses recent state-of-t
     <div class="container">
       <h2 class="section-title">Method</h2>
       <div class="placeholder-figure">TODO: Insert method overview figure.</div>
-      <p class="text-block">GenEraser is trained using a two-stage procedure, as illustrated in Figure~\ref{fig:framework}. The first stage trains the Multi-Conditional Mixture-of-Experts mechanism using random conditional dropout to enhance model alignment with mask and text conditions, thereby improving overall generalization. Subsequently, the second stage trains the Learnable Deep CFG Fusion module deterministically across three branches to balance the relative dominance of textual and mask guidance across diverse scenarios. Both the Locator and the Preserver follow this two-stage training procedure, while differing in their training configurations and injected noise levels. Finally, during inference, only the output corresponding to full guidance is utilized for subsequent denoising.</p>
+      <p class="text-block">GenEraser is trained using a two-stage procedure, as illustrated in the Figure. The first stage trains the Multi-Conditional Mixture-of-Experts mechanism using random conditional dropout to enhance model alignment with mask and text conditions, thereby improving overall generalization. Subsequently, the second stage trains the Learnable Deep CFG Fusion module deterministically across three branches to balance the relative dominance of textual and mask guidance across diverse scenarios. Both the Locator and the Preserver follow this two-stage training procedure, while differing in their training configurations and injected noise levels. Finally, during inference, only the output corresponding to full guidance is utilized for subsequent denoising.</p>
     </div>
   </section>
 
