@@ -141,6 +141,7 @@
       background: #111827;
     }
 
+    
     .anchor-row {
       width: var(--wide);
       margin: 18px auto 0;
@@ -151,6 +152,17 @@
       padding: 0 0 8px;
     }
 
+    .anchor-label {
+      display: inline-flex;
+      align-items: center;
+      min-height: 70px;
+      margin-right: 4px;
+      color: var(--muted);
+      font-size: 28px;
+      font-weight: 800;
+    }
+
+    
     .anchor-row a {
       display: inline-flex;
       align-items: center;
@@ -161,7 +173,7 @@
       border-radius: 999px;
       color: var(--text);
       background: #fff;
-      font-size: 32px;
+      font-size: 26;
       font-weight: 700;
     }
 
@@ -448,6 +460,7 @@
       border-radius: var(--radius);
       background: #fff;
     }
+    
   </style>
 </head>
 <body>
@@ -486,18 +499,12 @@
   </section>
 
   <nav class="anchor-row" aria-label="Page navigation">
-    <!-- <a href="#news">News</a>
-    <a href="#tldr">TL; DR</a> -->
-    <a href="#Video Object Removal Results">Results</a>
-    <!-- <a href="#reflection">Reflection</a>
-    <a href="#light">Light</a>
-    <a href="#smoke">Smoke</a>
-    <a href="#mirror">Mirror</a>
-    <a href="#shadow">Shadow</a> -->
-    <a href="#abstract">Abstract</a>
-    <a href="#method">Method</a>
-    <!-- <a href="#bibtex">BibTeX</a> -->
-  </nav>
+  <span class="anchor-label">Contents</span>
+
+  <a href="#Video Object Removal Results">Results</a>
+  <a href="#abstract">Abstract</a>
+  <a href="#method">Method</a>
+</nav>
 
   <!-- <section id="news" class="section">
     <div class="container">
